@@ -18,6 +18,24 @@ public class Address {
         this.zipcode = zipcode;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "building: '" + building + '\'' +
+                ", coord: " + coord +
+                ", street: '" + street + '\'' +
+                ", zipcode: '" + zipcode + '\'' +
+                '}';
+    }
+
+    public String getLatitude() {
+        return this.coord.get(1);
+    }
+
+    public String getLongitude() {
+        return this.coord.get(0);
+    }
+
     public String getBuilding() {
         return building;
     }

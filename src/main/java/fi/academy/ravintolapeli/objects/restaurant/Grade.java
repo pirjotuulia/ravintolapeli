@@ -10,6 +10,15 @@ public class Grade {//ravintolaolion sisäinen olio
     public Grade() {
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "date: '" + date +
+                "', grade: '" + grade + '\'' +
+                "', score: '" + score +
+                '}';
+    }
+
     public Grade(LocalDate date, String grade, int score) {
         this.date = date;
         this.grade = grade;
