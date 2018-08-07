@@ -35,6 +35,13 @@ public class Restaurant {//ravintolaolio, joka vastaa databasen ravintolaa
                 ", restaurant_id=" + restaurant_id +
                 '}';
     }
+    public String getLatitude() {
+        return this.address.getLatitude();
+    }
+
+    public String getLongitude() {
+        return this.address.getLongitude();
+    }
 
     public String get_id() {
         return _id;
