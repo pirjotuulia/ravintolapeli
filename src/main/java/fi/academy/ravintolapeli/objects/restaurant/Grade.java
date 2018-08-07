@@ -1,13 +1,24 @@
 package fi.academy.ravintolapeli.objects.restaurant;
 
-import java.time.LocalDate;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+@Component
 public class Grade {//ravintolaolion sisäinen olio
     private LocalDate date;
     private String grade;
     private int score;
 
     public Grade() {
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "date: '" + date +
+                "', grade: '" + grade + '\'' +
+                "', score: '" + score +
+                '}';
     }
 
     public Grade(LocalDate date, String grade, int score) {
