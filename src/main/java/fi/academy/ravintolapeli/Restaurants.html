@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" src="./src/styles.css"/>
+
+    <style>
+        body {
+            color: #444;
+            font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
+            text-shadow: 0 1px 0 #fff;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        table {
+            background: #f5f5f5;
+            border-collapse: separate;
+            box-shadow: inset 0 1px 0 #fff;
+            font-size: 12px;
+            line-height: 24px;
+            margin: 30px auto;
+            text-align: left;
+            width: 800px;
+        }
+
+        th {
+            background: url(https://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#777, #444);
+            border-left: 1px solid #555;
+            border-right: 1px solid #777;
+            border-top: 1px solid #555;
+            border-bottom: 1px solid #333;
+            box-shadow: inset 0 1px 0 #999;
+            color: #222;
+            font-weight: bold;
+            padding: 10px 15px;
+            position: relative;
+            text-shadow: 0 1px 0 #000;
+        }
+
+        th:after {
+            background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .08));
+            content: '';
+            display: block;
+            height: 25%;
+            left: 0;
+            margin: 1px 0 0 0;
+            position: absolute;
+            top: 25%;
+            width: 100%;
+        }
+
+        th:first-child {
+            border-left: 1px solid #777;
+            box-shadow: inset 1px 1px 0 #999;
+        }
+
+        th:last-child {
+            box-shadow: inset -1px 1px 0 #999;
+        }
+
+        td {
+            border-right: 1px solid #fff;
+            border-left: 1px solid #e8e8e8;
+            border-top: 1px solid #fff;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 4px;
+            padding-left: 10px;
+            /*position: relative;*/
+            transition: all 300ms;
+        }
+
+        td:first-child {
+            box-shadow: inset 1px 0 0 #fff;
+        }
+
+        td:last-child {
+            border-right: 1px solid #e8e8e8;
+            box-shadow: inset -1px 0 0 #fff;
+        }
+
+        tr:last-of-type td {
+            box-shadow: inset 0 -1px 0 #fff;
+        }
+
+        tr:last-of-type td:first-child {
+            box-shadow: inset 1px -1px 0 #fff;
+        }
+
+        tr:last-of-type td:last-child {
+            box-shadow: inset -1px -1px 0 #fff;
+        }
+        .App-logo {
+            animation: App-logo-spin infinite 15s linear;
+            height: 50px;
+        }
+        @keyframes App-logo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+    </style>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        var pagecount;
+        function expand(id) {
+            console.log("Clicked " + id);
+            $(".row" + id).toggle("slow");
+        }
+
+        function search(change) {
+            if (change == 0) {
+                pagecount = 0;
+            } else {
+                pagecount += change;
+            }
+            var pager = ""+pagecount;
+            var name = $('#name').val();
+            if (name == "") name = "all";
+            var borough = $('#borough option:selected').val();
+            var cuisine = $('#cuisine option:selected').val();
+            var result = JSON.parse($.ajax({
+                type: "GET",
+                url: "http://localhost:3000/users/" + borough + "/" + cuisine + "/" + name + "/" + pager + "/",
+                async: false
+            }).responseText);
+            $("#table").find("tbody").find("tr").empty();
+            for (var i = 0; i < result.length; i++) {
+                if (i==25) break;
+                $("#table").append("<tr class='clickme' onclick='expand(" + i + ")' style='font-weight: bold'>" +
+                    "<td>" + result[i].name + "</td>" +
+                    "<td>" + result[i].address.street + ", " + result[i].borough + "</td>" +
+                    "<td>" + result[i].cuisine + "</td>" +
+                    "</tr>");
+                if (result[i].grades.length > 0) {
+                    for (var x = 0; x < result[i].grades.length; x++) {
+                        $("#table").append("<tr style='background-color: #DDD' class='hi row" + i + "'>" +
+                            "<td>" + result[i].grades[x].date.substring(0, 10) + "</td>" +
+                            "<td>" + result[i].grades[x].grade + "</td>" +
+                            "<td>" + result[i].grades[x].score + "</td>" +
+                            "</tr>");
+                        $(".row" + i).hide();
+                    }
+                }
+            }
+            $("#table").append("<tr><td id='footer' style='text-align: center' colspan='3'></td></tr>");
+            if (pagecount>0) {
+                $("#footer").append("<button onclick='search(-25)'>Previous Page ></button>");
+            }
+            $("#footer").append("<span> Page "+(pagecount/25+1)+" </span>");
+            if (result.length>25) {
+                $("#footer").append("<button onclick='search(25)'>Next Page ></button>");
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div style="padding-top:20px; text-align:center; font-size:30px"><img class="App-logo" style="padding-right:50px; height:80px" src="dodoLogo.svg"/>Dodo Gogo - Restaurant Finder</div>
+<table id="table" style="width:70%">
+    <thead>
+    <th><input style="width: 250px" type="text" id="name" placeholder="Restaurant name"></th>
+    <th><select style="width: 250px" id="borough">
+        <option value="all">BOROUGH</option>
+        <option value="Brooklyn">Brooklyn</option>
+        <option value="Bronx">Bronx</option>
+        <option value="Manhattan">Manhattan</option>
+        <option value="Queens">Queens</option>
+    </select></th>
+    <th><select style="width: 250px" id="cuisine">
+        <option value="all">CUISINE</option>
+        <option value="American">American</option>
+        <option value="Bakery">Bakery</option>
+        <option value="Caribbean">Caribbean</option>
+        <option value="Chicken">Chicken</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Continental">Continental</option>
+        <option value="Ice">Ice Cream</option>
+        <option value="Irish">Irish</option>
+        <option value="Italian">Italian</option>
+        <option value="Jewish">Jewish/Kosher</option>
+        <option value="Latin">Latin</option>
+        <option value="Mexican">Mexican</option>
+        <option value="Pizza">Pizza</option>
+        <option value="Polish">Polish</option>
+        <option value="Sandwiches">Sandwiches</option>
+        <option value="Seafood">Seafood</option>
+        <option value="Spanish">Spanish</option>
+    </select></th>
+    <th>
+        <button onclick="search(0)">Gogo!</button>
+    </th>
+    </thead>
+    <tbody>
+    </tbody>
+
+</table>
+</body>
+</html>
