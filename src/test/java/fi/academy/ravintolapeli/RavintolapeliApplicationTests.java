@@ -13,4 +13,9 @@ public class RavintolapeliApplicationTests {
     public void contextLoads() {
     }
 
+    @Test
+    public void getMissions() {
+
+    }
+
 }

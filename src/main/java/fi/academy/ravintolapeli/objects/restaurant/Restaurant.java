@@ -1,8 +1,13 @@
 package fi.academy.ravintolapeli.objects.restaurant;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class Restaurant {//ravintolaolio, joka vastaa databasen ravintolaa
+    @Id
     private String _id;
     private Address address;
     private String borough;
@@ -35,6 +40,7 @@ public class Restaurant {//ravintolaolio, joka vastaa databasen ravintolaa
                 ", restaurant_id=" + restaurant_id +
                 '}';
     }
+
     public String getLatitude() {
         return this.address.getLatitude();
     }

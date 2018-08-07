@@ -1,7 +1,9 @@
 package fi.academy.ravintolapeli.objects.restaurant;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+@Component
 public class Address {
     private String building;
     private List<String> coord;

@@ -1,12 +1,20 @@
 package fi.academy.ravintolapeli.objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Mission {//suoritettava tehtävä
+
+    @Id
+    private String _id;
     private String title;
     private String imageurl;
     private String story;
     private String borough;
     private String cuisine;
     private String keyword;
+
 
     public Mission() {
     }
@@ -79,4 +87,14 @@ public class Mission {//suoritettava tehtävä
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
+
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
 }
