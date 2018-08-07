@@ -2,6 +2,7 @@ package fi.academy.ravintolapeli.controllers;
 
 import com.mongodb.*;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -13,11 +14,13 @@ public class RestaurantController {//rest-rajapinta ravintoloiden tietoihin
     DBCollection coll = db.getCollection("restaurants");
 
     @GetMapping("/list/{borough}/{cuisine}/{name}")
-    public List<DBObject> listRestaurants (@PathVariable String borough, @PathVariable String cuisine, @PathVariable String name) {
+    public List<DBObject> listRestaurants(@PathVariable String borough, @PathVariable String cuisine, @PathVariable String name) {
         return coll.find(BasicDBObject.parse("{ $and: [ " +
-                        "{ name: { $regex: '"+((name.equals("all")) ? "(?s).*" : name)+"' }}, " +
-                        "{ borough: { $regex: '"+((borough.equals("all")) ? "(?s).*" : borough)+"' }}, " +
-                        "{ cuisine: { $regex: '"+((cuisine.equals("all")) ? "(?s).*" : cuisine)+"' }} ] }"))
+                "{ grades: { $not: { $size: 0 } } }, " +
+                "{ grades: { $not: { $size: 1 } } }, " +
+                "{ name: { $regex: '" + ((name.equals("all")) ? "(?s).*" : name) + "' }}, " +
+                "{ borough: { $regex: '" + ((borough.equals("all")) ? "(?s).*" : borough) + "' }}, " +
+                "{ cuisine: { $regex: '" + ((cuisine.equals("all")) ? "(?s).*" : cuisine) + "' }} ] }"))
                 .sort(BasicDBObject.parse("{name:1}"))
                 .limit(10)
                 .toArray();
