@@ -17,7 +17,7 @@ public class DesignController {
         this.repo = repo;
     }
 
-    @RequestMapping(value = "/missiondesigner", method = RequestMethod.GET)
+    @RequestMapping(value = "/addMission", method = RequestMethod.GET)
     public String missionDesign(Model model) {
         Mission mission = new Mission();
         model.addAttribute("emptyDesign", mission);
