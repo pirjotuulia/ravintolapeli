@@ -4,6 +4,8 @@ import com.mongodb.*;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+
+@CrossOrigin
 @RestController
 public class RestaurantController {//rest-rajapinta ravintoloiden tietoihin
     MongoClient client = new MongoClient();

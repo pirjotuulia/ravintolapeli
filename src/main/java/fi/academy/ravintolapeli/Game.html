@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Restaurant Critic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        #div1 {
+            width: 350px;
+            height: 70px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+    </script>
+</head>
+<script>
+    var pagecount;
+
+    function expand(id) {
+        console.log("Clicked " + id);
+        $(".row" + id).toggle("slow");
+    }
+
+    function search(change) {
+        if (change == 0) {
+            pagecount = 0;
+        } else {
+            pagecount += change;
+        }
+        var pager = "" + pagecount;
+        var name = $('#name').val();
+        if (name == "") name = "all";
+        var borough = "Brooklyn";
+        var cuisine = "all";
+        var result = JSON.parse($.ajax({
+            type: "GET",
+            url: "http://localhost:8080/list/" + borough + "/" + cuisine + "/" + name + "/",
+            async: false
+        }).responseText);
+        $("#table").find("tbody").find("tr").empty();
+        for (var i = 0; i < result.length; i++) {
+            console.log(result[i]);
+            $("#table").append("<tr class='clickme' onclick='expand(" + i + ")' style='font-weight: bold'>" +
+                "<td>" + result[i].name + "</td>" +
+                "<td>" + result[i].address.street + ", " + result[i].borough + "</td>" +
+                "<td>" + result[i].cuisine + "</td>" +
+                "</tr>");
+            if (result[i].grades.length > 0) {
+                for (var x = 0; x < result[i].grades.length; x++) {
+                    $("#table").append("<tr style='background-color: #DDD' class='hi row" + i + "'>" +
+                        "<td>" + result[i].grades[x].date.substring(0, 10) + "</td>" +
+                        "<td>" + result[i].grades[x].grade + "</td>" +
+                        "<td>" + result[i].grades[x].score + "</td>" +
+                        "</tr>");
+                    $(".row" + i).hide();
+                }
+            }
+        }
+    }
+
+</script>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Restaurant Critic</h1>
+    <p>Placeholder</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Player Stats</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <p><span style="color:red" class="glyphicon glyphicon-heart"></span> 100/100</p>
+        </div>
+        <div class="col-sm-4">
+            <p><span style="color:green" class="glyphicon glyphicon-usd"></span> 1000</p>
+        </div>
+        <div class="col-sm-4">
+            <p><span style="color:blue" class="glyphicon glyphicon-map-marker"></span> Times Square</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Restaurants</h3>
+            <table id="table">
+                <thead>
+                <th><input style="width: 250px" type="text" id="name" placeholder="Restaurant name"></th>
+                <th>
+                    <button onclick="search(0)">Gogo!</button>
+                </th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            <h3>Map View</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Hand</h3>
+            <img id="drag1" src="dodoLogo.svg" draggable="true" ondragstart="drag(event)" width="336" height="69">
+        </div>
+        <div class="col-sm-6">
+            <h3>In Play</h3>
+            <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="background: #CCC;">Drop a card here
+                to play it!
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
