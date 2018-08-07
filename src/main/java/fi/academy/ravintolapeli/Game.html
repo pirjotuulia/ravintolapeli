@@ -12,6 +12,27 @@
             padding: 10px;
             border: 1px solid #aaaaaa;
         }
+        .card {
+            width: 21em;
+            height: 29em;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            background-color: black;
+        }
+        .inner {
+            background-color: cornflowerblue;
+            margin: 0.5em;
+            padding: 0.5em;
+            max-height: 100%;
+        }
+        .illo {
+            max-height: 3em;
+        }
+        .story {
+            background-color: skyblue;
+            margin: 1em
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -40,12 +61,6 @@
     }
 
     function search(change) {
-        if (change == 0) {
-            pagecount = 0;
-        } else {
-            pagecount += change;
-        }
-        var pager = "" + pagecount;
         var name = $('#name').val();
         if (name == "") name = "all";
         var borough = "Brooklyn";
@@ -111,7 +126,16 @@
     <div class="row">
         <div class="col-sm-6">
             <h3>Hand</h3>
+            <div id="hand" style="background-color: #DDD">
+                <div class="card">
+                    <div class="inner">
+                    <div class="title" style="width: 100%">Test Card</div>
+                    <img class="illo center" src="dodoLogo.svg"/>
+                    <p class="story">I want to eat something to test how it works!</p>
+                    </div>
+                </div>
             <img id="drag1" src="dodoLogo.svg" draggable="true" ondragstart="drag(event)" width="336" height="69">
+            </div>
         </div>
         <div class="col-sm-6">
             <h3>In Play</h3>
