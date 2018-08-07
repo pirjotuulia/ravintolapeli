@@ -17,7 +17,7 @@ public class MissionController {//rest-rajapinta pelimissioihin
     public MissionController(@Autowired MissionRepository repo) {
         this.repo = repo;
     }
-    
+
     @GetMapping("/missions/{word}")
     public List<Mission> listMissions(@PathVariable String word) {
         List<Mission> listOfMissions = repo.findAllByStoryIsContaining(word);
@@ -43,7 +43,7 @@ public class MissionController {//rest-rajapinta pelimissioihin
 
     @PostMapping("/missions")
     public Mission saveMission(@RequestBody Mission mission) {
-        if (mission.getKeyword().isEmpty()) {
+        if (mission.getKeyword() == null || mission.getKeyword().isEmpty()) {
             mission.setKeyword("all");
         }
         mission = repo.save(mission);
