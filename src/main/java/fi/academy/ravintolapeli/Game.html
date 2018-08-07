@@ -12,6 +12,55 @@
             padding: 10px;
             border: 1px solid #aaaaaa;
         }
+        .card {
+            width: 21em;
+            height: 29em;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            background-color: black;
+        }
+        .inner {
+            background-color: cornflowerblue;
+            margin: 0.5em;
+            padding: 0.5em;
+            max-height: 100%;
+            height: 100%;
+        }
+        .title {
+            font-weight: bold;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .title, .illo, .story {
+            background-color: skyblue;
+            margin: 0.5em;
+            padding: 0.2em 0.5em;
+        }
+        .illo {
+            min-height: 10em;
+            text-align: center;
+            max-height: 10em;
+        }
+        .pic {
+            min-height: 8em;
+            text-align: center;
+            max-height: 8em;
+        }
+        .story {
+            min-height: 13em;
+            max-height: 13em;
+            -webkit-border-bottom-right-radius: 5px;
+            -webkit-border-bottom-left-radius: 5px;
+            -moz-border-radius-bottomright: 5px;
+            -moz-border-radius-bottomleft: 5px;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -40,16 +89,10 @@
     }
 
     function search(change) {
-        if (change == 0) {
-            pagecount = 0;
-        } else {
-            pagecount += change;
-        }
-        var pager = "" + pagecount;
         var name = $('#name').val();
         if (name == "") name = "all";
         var borough = "Brooklyn";
-        var cuisine = "all";
+        var cuisine = "Chinese";
         var result = JSON.parse($.ajax({
             type: "GET",
             url: "http://localhost:8080/list/" + borough + "/" + cuisine + "/" + name + "/",
@@ -60,19 +103,8 @@
             console.log(result[i]);
             $("#table").append("<tr class='clickme' onclick='expand(" + i + ")' style='font-weight: bold'>" +
                 "<td>" + result[i].name + "</td>" +
-                "<td>" + result[i].address.street + ", " + result[i].borough + "</td>" +
-                "<td>" + result[i].cuisine + "</td>" +
+                "<td>" + result[i].address.street + "</td>" +
                 "</tr>");
-            if (result[i].grades.length > 0) {
-                for (var x = 0; x < result[i].grades.length; x++) {
-                    $("#table").append("<tr style='background-color: #DDD' class='hi row" + i + "'>" +
-                        "<td>" + result[i].grades[x].date.substring(0, 10) + "</td>" +
-                        "<td>" + result[i].grades[x].grade + "</td>" +
-                        "<td>" + result[i].grades[x].score + "</td>" +
-                        "</tr>");
-                    $(".row" + i).hide();
-                }
-            }
         }
     }
 
@@ -122,12 +154,19 @@
     <div class="row">
         <div class="col-sm-6">
             <h3>Hand</h3>
-            <img id="drag1" src="dodoLogo.svg" draggable="true" ondragstart="drag(event)" width="336" height="69">
+            <div id="hand" style="background-color: #DDD">
+                <div id="drag1" class="card" draggable="true" ondragstart="drag(event)">
+                    <div class="inner">
+                        <div class="title">Test Card</div>
+                        <div class="illo"><img class="pic center" src="dodoLogo.svg"/></div>
+                        <div class="story">I want to eat something to test how it works!</div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-sm-6">
             <h3>In Play</h3>
-            <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="background: #CCC;">Drop a card here
-                to play it!
+            <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="background: #CCC;">
             </div>
         </div>
     </div>
