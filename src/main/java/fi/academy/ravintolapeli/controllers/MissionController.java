@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 public class MissionController {//rest-rajapinta pelimissioihin
     private MissionRepository repo;
