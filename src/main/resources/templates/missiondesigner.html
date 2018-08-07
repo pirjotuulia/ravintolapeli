@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mission Designer</title>
+    <style>
+        table {
+            padding-top: 10px;
+            padding-right: 0px;
+            padding-bottom: 25px;
+            padding-left: 0px;
+        }
+    </style>
+</head>
+<body>
+<div th:if="${added}" class="card">
+    <h1 th:text="${added.getTitle()}"></h1>
+    <img th:src="@{${added.getImageurl()}}" alt="Picture related to added mission" height="300px"/>
+    <table>
+        <tbody>
+        <tr>
+            <td>Story: </td>
+            <td th:text="${added.getStory()}">Story: </td>
+        </tr>
+        <tr>
+            <td>Borough: </td>
+            <td th:text="${added.getBorough()}">Borough: </td>
+        </tr>
+        <tr>
+            <td>Cuisine: </td>
+            <td th:text="${added.getCuisine()}">Cuisine: </td>
+        </tr>
+        <tr>
+            <td>Keyword: </td>
+            <td th:text="${added.getKeyword()}">Keyword: </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <form method="POST" action="/addMission">
+        <h2>Add information (fields marked with * are required):</h2><br/>
+        Title * :<br/>
+        <input type="text" placeholder="Title" name="title"/><br/>
+        Image * :<br/>
+        <input type="url" placeholder="Image URL" name="imageurl"/><br/>
+        Story * :<br/>
+        <input type="text" placeholder="Story" name="story"/><br/>
+        Borough:<br/>
+        <input type="text" placeholder="Borough" name="borough" value="all"/><br/>
+        Cuisine:<br/>
+        <input type="text" placeholder="Cuisine" name="cuisine" value="all"/><br/>
+        Keyword:<br/>
+        <input type="text" placeholder="Keyword" name="keyword" value=""/><br/>
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
+</body>
+</html>
