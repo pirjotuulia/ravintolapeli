@@ -15,9 +15,9 @@
         .card {
             width: 21em;
             height: 29em;
-            -webkit-border-radius: 4px;
-            -moz-border-radius: 4px;
-            border-radius: 4px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
             background-color: black;
         }
         .inner {
@@ -25,13 +25,41 @@
             margin: 0.5em;
             padding: 0.5em;
             max-height: 100%;
+            height: 100%;
+        }
+        .title {
+            font-weight: bold;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .title, .illo, .story {
+            background-color: skyblue;
+            margin: 0.5em;
+            padding: 0.2em 0.5em;
         }
         .illo {
-            max-height: 3em;
+            min-height: 10em;
+            text-align: center;
+            max-height: 10em;
+        }
+        .pic {
+            min-height: 8em;
+            text-align: center;
+            max-height: 8em;
         }
         .story {
-            background-color: skyblue;
-            margin: 1em
+            min-height: 13em;
+            max-height: 13em;
+            -webkit-border-bottom-right-radius: 5px;
+            -webkit-border-bottom-left-radius: 5px;
+            -moz-border-radius-bottomright: 5px;
+            -moz-border-radius-bottomleft: 5px;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -127,14 +155,13 @@
         <div class="col-sm-6">
             <h3>Hand</h3>
             <div id="hand" style="background-color: #DDD">
-                <div class="card">
+                <div id="drag1" class="card" draggable="true" ondragstart="drag(event)">
                     <div class="inner">
-                    <div class="title" style="width: 100%">Test Card</div>
-                    <img class="illo center" src="dodoLogo.svg"/>
-                    <p class="story">I want to eat something to test how it works!</p>
+                        <div class="title">Test Card</div>
+                        <div class="illo"><img class="pic center" src="dodoLogo.svg"/></div>
+                        <div class="story">I want to eat something to test how it works!</div>
                     </div>
                 </div>
-            <img id="drag1" src="dodoLogo.svg" draggable="true" ondragstart="drag(event)" width="336" height="69">
             </div>
         </div>
         <div class="col-sm-6">
