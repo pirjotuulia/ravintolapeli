@@ -1,13 +1,18 @@
 package fi.academy.ravintolapeli.objects;
 
+import fi.academy.ravintolapeli.objects.restaurant.Restaurant;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameStats {//pelitilanneolio
     private int health;
-    private int money;
+    private double money;
     private String foodcriticName;
     private List<Mission> hand;
     private List<Mission> playedMissions;
+    private boolean missionMode;
+    private List<LastMove> moves;
 
     public GameStats() {
     }
@@ -18,6 +23,8 @@ public class GameStats {//pelitilanneolio
         this.foodcriticName = foodcriticName;
         this.hand = hand;
         this.playedMissions = playedMissions;
+        this.missionMode = false;
+        this.moves = new ArrayList<>();
     }
 
     @Override
@@ -31,13 +38,23 @@ public class GameStats {//pelitilanneolio
                 '}';
     }
 
+    public void makeMove(int index, Restaurant restaurant, double distance, int time) {
+        playCard(index);
+        int restaurantScore = restaurant.getGrades().get(0).getScore();
+        LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), time, distance, false);
+        useHealth(restaurantScore);
+        useMoney(move.getUsedMoney());
+        this.moves.add(move);
+        setMissionMode(false);
+    }
+
     public int useHealth(int used) {
-        this.health-= used;
+        this.health -= used;
         return this.health;
     }
 
-    public int useMoney(int used) {
-        this.money-= used;
+    public double useMoney(double used) {
+        this.money -= used;
         return this.money;
     }
 
@@ -45,6 +62,14 @@ public class GameStats {//pelitilanneolio
         Mission playedCard = this.hand.get(index);
         this.hand.remove(index);
         this.playedMissions.add(playedCard);
+    }
+
+    public boolean isMissionMode() {
+        return missionMode;
+    }
+
+    public void setMissionMode(boolean missionMode) {
+        this.missionMode = missionMode;
     }
 
     public int getHealth() {
@@ -55,11 +80,11 @@ public class GameStats {//pelitilanneolio
         this.health = health;
     }
 
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
