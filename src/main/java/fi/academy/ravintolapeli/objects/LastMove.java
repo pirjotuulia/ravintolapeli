@@ -27,6 +27,18 @@ public class LastMove {
         }
     }
 
+    @Override
+    public String toString() {
+        return "LastMove{" +
+                "usedHealth=" + usedHealth +
+                ", usedMoney=" + usedMoney +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", time=" + time +
+                ", distanceInMiles=" + distanceInMiles +
+                '}';
+    }
+
     public int getUsedHealth() {
         return usedHealth;
     }

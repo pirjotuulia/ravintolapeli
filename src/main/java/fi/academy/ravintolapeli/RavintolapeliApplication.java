@@ -15,7 +15,7 @@ public class RavintolapeliApplication {
         SpringApplication.run(RavintolapeliApplication.class, args);
     }
 
-//    @Bean
+//    @Bean//tällä Beanilla luotiin tietokanta ja lisättiin siihen kaksi missiota
 //    public CommandLineRunner alustus(@Autowired MissionRepository repository) {
 //        return args -> {
 //            repository.deleteAll();
