@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" rel="stylesheet"/>
     <style>
         .field {
             width: 350px;
@@ -67,6 +68,7 @@
             border-bottom-left-radius: 5px;
         }
     </style>
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
@@ -101,14 +103,16 @@
         $("#table").find("tbody").find("tr").empty();
         for (var i = 0; i < result.length; i++) {
             console.log(result[i]);
-            $("#table").append("<tr onclick='expand(" + i + ")' style='font-weight: bold'>" +
+            $("#table").append("<tr style='font-weight: bold'>" +
                 "<td>" + result[i].name + "</td>" +
                 "<td>" + result[i].address.street + "</td>" +
                 "</tr>");
+            $("#table").find("tr").last()
+                .attr("onclick","mappi('"+result[i].address.coord[1]+"','"+result[i].address.coord[0]+"')");
         }
     }
 </script>
-<body>
+<body onload="mappi('40.7676919', '-73.98513559999999')">
 
 <div class="jumbotron text-center">
     <h1>Restaurant Critic</h1>
@@ -156,8 +160,29 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-sm-6">
+        <div id="mapHere" class="col-sm-6">
             <h3>Map View</h3>
+            <script>
+                function mappi(long,lat) {
+                    $("#osm-map").remove();
+                    $("#mapHere").append("<div id='osm-map' style='height:300px'></div>");
+
+                    var element = document.getElementById('osm-map');
+                    var map = L.map(element);
+
+                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+
+                    console.log(long+" "+lat);
+                    var x = ""+long;
+                    var y = ""+lat;
+                    var target = L.latLng(x, y);
+                    map.setView(target, 10);
+
+                    L.marker(target).addTo(map);
+                }
+            </script>
         </div>
     </div>
 </div>

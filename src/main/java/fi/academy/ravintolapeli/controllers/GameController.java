@@ -15,16 +15,6 @@ public class GameController {
 
     @GetMapping("/page")
     public String getPage(Model model) {
-//        List list = coll.find(BasicDBObject.parse("{ $and: [ " +
-//                "{ grades: { $not: { $size: 0 } } }, " +
-//                "{ grades: { $not: { $size: 1 } } }, " +
-//                "{ name: { $regex: '" + ((name.equals("all")) ? "(?s).*" : name) + "' }}, " +
-//                "{ borough: { $regex: '" + ((borough.equals("all")) ? "(?s).*" : borough) + "' }}, " +
-//                "{ cuisine: { $regex: '" + ((cuisine.equals("all")) ? "(?s).*" : cuisine) + "' }} ] }"))
-//                .sort(BasicDBObject.parse("{name:1}"))
-//                .limit(10)
-//                .toArray();
-//        model.addAttribute("restaurants",list);
         return "Game";
     }
 }
