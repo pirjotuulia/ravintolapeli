@@ -42,16 +42,15 @@ public class RavintolapeliApplicationTests {
 
     @Test
     public void moveCard() {
-        assertThat(stats.getHand().size(), is(0));
-        //haetaan uudet missionit
         ResponseEntity<List<Mission>> response = restTemplate.exchange(
                 "http://localhost:8080/missions/",
                 HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Mission>>() {
                 });
         stats.setHand(response.getBody());
-        assertThat(stats.getHand().size(), is(5));
-        assertThat(stats.getHand().get(0).getTitle().isEmpty(), is(false) );
+        int handSizeBefore = stats.getHand().size();
+        stats.playCard(0);
+        assertThat(stats.getHand().size(), is(handSizeBefore-1));
     }
 
 }
