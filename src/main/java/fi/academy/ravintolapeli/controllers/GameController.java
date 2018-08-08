@@ -17,14 +17,6 @@ import java.util.List;
 
 @Controller
 public class GameController {
-<<<<<<< HEAD
-    MongoClient client = new MongoClient();
-    DB db = client.getDB("test"); // TODO: Tämä on deprekoitu, mutta sain sen helpoiten toimimaan; vaihdetaan jos ehditään...
-    DBCollection coll = db.getCollection("restaurants");
-
-    @GetMapping("/page")
-    public String getPage(Model model) {
-=======
     private GameStats stats;
     private RestTemplate restTemplate;
 
@@ -44,7 +36,6 @@ public class GameController {
             this.stats.setHand(response.getBody());
         }
         model.addAttribute("gamestats", this.stats);
->>>>>>> 2bb5b1c9cfe590a906e491073d56a78ff0b4b1db
         return "Game";
     }
 
