@@ -60,6 +60,14 @@ public class GameStats {//pelitilanneolio
         return this;//palauttaa GameStats-olion (tarvitaanko tätä edes?)
     }
 
+    public List<LastMove> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(List<LastMove> moves) {
+        this.moves = moves;
+    }
+
     public void gameOver() {//kun peli on pelattu loppuun
         this.setHand(new ArrayList<>()); //tyhjennetään käsi, riippumatta siitä, oliko se jo tyhjä vai loppuiko peli muusta syystä
         this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
