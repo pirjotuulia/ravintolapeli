@@ -88,11 +88,28 @@
     </script>
 </head>
 <script>
-    function expand(id) {
-        console.log("Clicked " + id);
-        $(".row" + id).toggle("slow");
-    }
+    function mappi(long,lat) {
+        console.log("Mappi mainittu!");
+        $("#osm-map").remove();
+        $("#mapHere").append("<div id='osm-map' style='height:300px'></div>");
 
+        var element = document.getElementById('osm-map');
+        var map = L.map(element);
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        console.log(long+" "+lat);
+        var x = ""+long;
+        var y = ""+lat;
+        var target = L.latLng(x, y);
+        map.setView(target, 10);
+
+        L.marker(target).addTo(map);
+    }
+</script>
+<script>
     function getRestaurants(borough,cuisine,name) {
         if (name == "") name = "all";
         var result = JSON.parse($.ajax({
@@ -112,8 +129,10 @@
         }
     }
 </script>
-<body onload="mappi('40.7676919', '-73.98513559999999')">
+<body>
+<script>
 
+</script>
 <div class="jumbotron text-center">
     <h1>Restaurant Critic</h1>
     <p>Placeholder</p>
@@ -162,27 +181,6 @@
         </div>
         <div id="mapHere" class="col-sm-6">
             <h3>Map View</h3>
-            <script>
-                function mappi(long,lat) {
-                    $("#osm-map").remove();
-                    $("#mapHere").append("<div id='osm-map' style='height:300px'></div>");
-
-                    var element = document.getElementById('osm-map');
-                    var map = L.map(element);
-
-                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    }).addTo(map);
-
-                    console.log(long+" "+lat);
-                    var x = ""+long;
-                    var y = ""+lat;
-                    var target = L.latLng(x, y);
-                    map.setView(target, 10);
-
-                    L.marker(target).addTo(map);
-                }
-            </script>
         </div>
     </div>
 </div>
@@ -208,7 +206,7 @@
         }
     }
 
-    window.onload = getMissions;
+    window.onload = getMissions, mappi('40.7676919', '-73.98513559999999');
 </script>
 </body>
 </html>
