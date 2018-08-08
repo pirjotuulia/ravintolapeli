@@ -145,5 +145,11 @@ public class GameStats {//pelitilanneolio
         this.playedMissions = playedMissions;
     }
 
+    public void putOnTop (int index) {
+        Mission tmp = this.hand.get(index);
+        this.hand.remove(index);
+        this.hand.add(tmp);
+
+    }
 
 }

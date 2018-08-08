@@ -39,13 +39,19 @@ public class GameController {
         return "Game";
     }
 
+    @GetMapping("/top/{index}")
+    public String putOnTop(@PathVariable int index, Model model) {
+        this.stats.putOnTop(index);
+        model.addAttribute("gamestats", this.stats);
+        return "Game";
+    }
+
     @GetMapping("/card/{index}")
     public String card(@PathVariable int index, Model model) {
         this.stats.playCard(index);
         model.addAttribute("gamestats", this.stats);
         return "Game";
     }
-
 
     @GetMapping("/play")
     public String play(@RequestBody int index, Restaurant restaurant, double distance, int time, Model model) {
