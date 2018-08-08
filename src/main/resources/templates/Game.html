@@ -146,10 +146,10 @@
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <p><span style="color:red" class="glyphicon glyphicon-heart"></span> 100/100</p>
+            <p th:inline="text"><span style="color:red" class="glyphicon glyphicon-heart">   </span>[[${gamestats.getHealth()} + '/100']]</p>
         </div>
         <div class="col-sm-4">
-            <p><span style="color:green" class="glyphicon glyphicon-usd"></span> 1000</p>
+            <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>[[${#numbers.formatDecimal(gamestats.getMoney(), 1, 2)} + '/100.00']]</p>
         </div>
         <div class="col-sm-4">
             <p><span style="color:blue" class="glyphicon glyphicon-map-marker"></span> Times Square</p>
