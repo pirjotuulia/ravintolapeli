@@ -13,19 +13,19 @@ public class Mission {//suoritettava tehtävä
     private String story;
     private String borough;
     private String cuisine;
-    private String keyword;
+    private String name;
 
 
     public Mission() {
     }
 
-    public Mission(String title, String imageurl, String story, String borough, String cuisine, String keyword) {
+    public Mission(String title, String imageurl, String story, String borough, String cuisine, String name) {
         this.title = title;
         this.imageurl = imageurl;
         this.story = story;
         this.borough = borough;
         this.cuisine = cuisine;
-        this.keyword = keyword;
+        this.name = name;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Mission {//suoritettava tehtävä
                 ", story: '" + story + '\'' +
                 ", borough: '" + borough + '\'' +
                 ", cuisine: '" + cuisine + '\'' +
-                ", keyword: '" + keyword + '\'' +
+                ", name: '" + name + '\'' +
                 '}';
     }
 
@@ -80,12 +80,12 @@ public class Mission {//suoritettava tehtävä
         this.cuisine = cuisine;
     }
 
-    public String getKeyword() {
-        return keyword;
+    public String getName() {
+        return name;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setName(String name) {
+        this.name = name;
     }
 
 

@@ -25,8 +25,8 @@ public class DesignController {
     }
 
     @RequestMapping(value = "/addMission", method = RequestMethod.POST)
-    public String addMission(@RequestParam String title, String imageurl, String story, String borough, String cuisine, String keyword, Model model) {
-        Mission addable = new Mission(title, imageurl, story, borough, cuisine, keyword);
+    public String addMission(@RequestParam String title, String imageurl, String story, String borough, String cuisine, String name, Model model) {
+        Mission addable = new Mission(title, imageurl, story, borough, cuisine, name);
         Mission added = repo.save(addable);
         if (added != null) {
             model.addAttribute("success", true);

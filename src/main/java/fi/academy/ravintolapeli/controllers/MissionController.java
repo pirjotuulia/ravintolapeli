@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -44,8 +43,8 @@ public class MissionController {//rest-rajapinta pelimissioihin
 
     @PostMapping("/missions")
     public Mission saveMission(@RequestBody Mission mission) {
-        if (mission.getKeyword() == null || mission.getKeyword().isEmpty()) {//jos keyword on tyhjä tai puuttuu, lisätään oliolle "all"-keyword
-            mission.setKeyword("all");
+        if (mission.getName() == null || mission.getName().isEmpty()) {//jos keyword on tyhjä tai puuttuu, lisätään oliolle "all"-keyword
+            mission.setName("all");
         }
         mission = repo.save(mission);
         return mission;
@@ -54,8 +53,8 @@ public class MissionController {//rest-rajapinta pelimissioihin
     @PutMapping("/missions/{id}")
     public Mission changeMission(@PathVariable String id, @RequestBody Mission changedMission) {
         if (!repo.existsById(id)) {//jos id:llä ei löydy dokumenttia, lisätään keywordiksi "all", jos se oli tyhjä tai puuttui
-            if (changedMission.getKeyword().isEmpty()) {
-                changedMission.setKeyword("all");
+            if (changedMission.getName().isEmpty()) {
+                changedMission.setName("all");
             }
         } else {
             changedMission.set_id(id); //jos id:llä löytyi dokumentti, lisätään oliolle id ennen tietokantaan tallettamista, jotta tietokanta tunnistaa olion samaksi kuin dokumentti

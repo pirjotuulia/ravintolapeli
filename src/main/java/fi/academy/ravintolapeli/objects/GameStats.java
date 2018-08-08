@@ -16,6 +16,7 @@ public class GameStats {//pelitilanneolio
     private boolean missionMode;
     private List<LastMove> moves;
 
+    //asetetaan alkuarvot
     public GameStats() {
         this.health = 100;
         this.money = 100;
