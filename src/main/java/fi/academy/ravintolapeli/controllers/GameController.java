@@ -56,24 +56,4 @@ public class GameController {
         }
         return "redirect:/";
     }
-//    MongoClient client = new MongoClient();
-//    DB db = client.getDB("test"); // TODO: Tämä on deprekoitu, mutta sain sen helpoiten toimimaan; vaihdetaan jos ehditään...
-//    DBCollection coll = db.getCollection("restaurants");
-//
-//    @GetMapping("/page")
-//    public String getPage(Model model) {
-////        List list = coll.find(BasicDBObject.parse("{ $and: [ " +
-////                "{ grades: { $not: { $size: 0 } } }, " +
-////                "{ grades: { $not: { $size: 1 } } }, " +
-////                "{ name: { $regex: '" + ((name.equals("all")) ? "(?s).*" : name) + "' }}, " +
-////                "{ borough: { $regex: '" + ((borough.equals("all")) ? "(?s).*" : borough) + "' }}, " +
-////                "{ cuisine: { $regex: '" + ((cuisine.equals("all")) ? "(?s).*" : cuisine) + "' }} ] }"))
-////                .sort(BasicDBObject.parse("{name:1}"))
-////                .limit(10)
-////                .toArray();
-////        model.addAttribute("restaurants",list);
-//        return "Game";
-//    }
-
-
 }
