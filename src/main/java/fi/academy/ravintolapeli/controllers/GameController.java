@@ -80,4 +80,10 @@ public class GameController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/reset")
+    public String reset(Model model) {
+        this.stats = new GameStats();
+        return game(model);
+    }
 }
