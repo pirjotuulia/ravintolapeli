@@ -4,10 +4,8 @@ function choose(event) {
     var parent = td.parent();
     var $parent = td.parent().children();
     var row = $parent.index(td);
-
     console.log(row);
-    // console.log(row);
-    // var restaurant = JSON.parse(sessionStorage.restaurants)[row];
+    var restaurant = JSON.parse(sessionStorage.restaurants)[row];
     // $('.play').empty();
     // $('<p></p>')
     //     .text("You chose " + restaurant.name/* + " (" + restaurant.address.building + ", " + restaurant.address.street + ", " + restaurant.borough */ + ")")
@@ -18,10 +16,5 @@ function choose(event) {
     //     event.preventDefault();
     //     console.log(restaurant.name);
     // });
-
     return;
-}
-$.fn.getIndex = function(){
-    var $p=$(this).parent().children();
-    return $p.index(this);
 }
