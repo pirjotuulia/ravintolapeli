@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <style>
         .field {
             width: 350px;
-            height: 33em;
+            height: 40em;
             padding: 10px;
             border: 1px solid #aaaaaa;
         }
@@ -62,6 +63,7 @@
             min-height: 8em;
             text-align: center;
             max-height: 8em;
+            max-width: 100%;
         }
 
         .story {
@@ -74,24 +76,42 @@
             border-bottom-right-radius: 5px;
             border-bottom-left-radius: 5px;
         }
+        .card:nth-of-type(1) {
+            top:4.0em;
+            left:5em;
+        }
+        .card:nth-of-type(2) {
+            top:6.5em;
+            left:4em;
+        }
+        .card:nth-of-type(3) {
+            top:9.0em;
+            left:3em;
+        }
+        .card:nth-of-type(4) {
+            top:11.5em;
+            left:2em;
+        }
+        .card:nth-of-type(5) {
+            top:14.0em;
+            left:1em;
+        }
     </style>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
     <script>
-        function allowDrop(ev) {
-            ev.preventDefault();
-        }
-
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
-
-        function drop(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
-            ev.target.appendChild(document.getElementById(data));
-        }
+        $(document).on("pagecreate", "#main", function () {
+            $("div").on("swiperight", function () {
+                $(this).fadeOut(300, function () {
+                        //$.ajax("/killdodo/kill/"+this.id, {type: 'DELETE'});
+                        //$(this).remove();
+                    }
+                );
+            });
+        });
     </script>
 </head>
 <script>
@@ -128,7 +148,7 @@
         $("#table").find("tbody").find("tr").empty();
         for (var i = 0; i < result.length; i++) {
             console.log(result[i]);
-            $("#table").append("<tr style='font-weight: bold'>" +
+            $("#table").append("<tr>" +
                 "<td>" + result[i].name + "</td>" +
                 "<td>" + result[i].address.street + "</td>" +
                 "<td><button class='" + i + "'>Choose</button></td>" +
@@ -142,6 +162,7 @@
         }
     }
 </script>
+
 <body>
 <script>
 
@@ -170,15 +191,28 @@
             <p><span style="color:blue" class="glyphicon glyphicon-map-marker"></span> Times Square</p>
         </div>
     </div>
-    <div class="row">
+    <div id="main" class="row">
         <div class="col-sm-6">
             <h3>In Hand</h3>
             <div id="hand" class="field" style="background-color: #DDD">
+                <div class="card slidable" th:each="card,iter: ${gamestats.hand}" th:id="${card._id}">
+                    <div class='inner'>
+                        <div class="title" th:text="${card.title}" th:onclick="|cycleDeck('${iter.index}')|"></div>
+                        <div class="illo"><img class='pic center' th:src="${card.imageurl}" th:onclick="|getRestaurants('${card.borough}','${card.cuisine}','${card.name}')|"></div>
+                        <div class="story" th:text="${card.story}"></div>
+                    </div>
+                </div>
             </div>
         </div>
+        <script>
+            function cycleDeck (index) {
+                $.ajax("http://localhost:8080/top/" + index, {type: 'GET'});
+                document.location.reload(true);
+            }
+        </script>
         <div class="col-sm-6">
             <h3>In Play</h3>
-            <div id="play" class="field" ondrop="drop(event)" ondragover="allowDrop(event)" style="background: #DDD;">
+            <div id="play" class="field" style="background: #DDD;">
             </div>
         </div>
     </div>
@@ -205,26 +239,8 @@
 </div>
 
 <script>
-    function getMissions() {
-        var result = JSON.parse($.ajax({
-            type: "GET",
-            url: "http://localhost:8080/missions/",
-            async: false
-        }).responseText);
-        for (var i = 0; i < result.length; i++) {
-            console.log(result[i]);
-            $("#hand").append("<div style='top:" + (i * 2.7 + 5) + "em; left:" + (i * -1 + 3) + "em' class='card' " +
-                "draggable='" + ((i == result.length - 1) ? true : false) + "' ondragstart='drag(event)'>" +
-                "<div class='inner'>" +
-                "<div class='title'>" + result[i].title + "</div>" +
-                "<div class='illo'><img class='pic center' src='" + result[i].imageurl + "'/></div>" +
-                "<div class='story'>" + result[i].story + "</div>" +
-                "</div>")
-                .attr("onclick", "getRestaurants('" + result[i].borough + "','" + result[i].cuisine + "','" + result[i].name + "')");
-        }
-    }
 
-    window.onload = getMissions, mappi('40.7676919', '-73.98513559999999');
+    window.onload = mappi('40.7676919', '-73.98513559999999');
 </script>
 <script type="text/javascript" th:src="@{/js/choose.js}">
 </script>
