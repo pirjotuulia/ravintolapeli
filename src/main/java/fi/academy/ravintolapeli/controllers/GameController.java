@@ -66,7 +66,8 @@ public class GameController {
     }
 
     @GetMapping("/play/{index}/{distance}")
-    public String play(@PathVariable int index, double distance, Model model) {
+    public String play(@PathVariable int index, @PathVariable double distance, Model model) {
+        System.out.println(index+" "+distance);
         this.stats = this.stats.makeMove(index, distance); //päivitetään statsit
         model.addAttribute("gamestats", this.stats);
         if (this.stats.getHand().isEmpty()||this.stats.getHealth()<=0||this.stats.getMoney()<=0) { //jos peli loppuu joko terveyden, rahojen tai korttien loppumisen vuoksi
