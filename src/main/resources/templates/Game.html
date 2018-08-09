@@ -150,7 +150,7 @@
 <script>
     function selectRestaurant (fLong, fLat, tLong, tLat, index) {
         // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
-        var distance =getDistance(fLong, fLat, tLat, tLong); /*Row 154*/
+        var distance = getDistance(fLong, fLat, tLat, tLong); /*Row 154*/
         // var distance = 5;
         // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
         $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
