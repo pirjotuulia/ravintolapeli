@@ -1,9 +1,4 @@
 function getDistance(fLong, fLat, tLong, tLat) {
-    console.log("Distanceen päästään");
-    /*Näillä testataan, poistan kun pelittää parametreillä*/
-    // var test = '-73.8642349,40.75356';
-    // var jep = '-73.871194,40.6730975';
-
     var fromLoc =fLat + ',' + fLong;
     /*Lähtöpiste*/
 
@@ -11,7 +6,6 @@ function getDistance(fLong, fLat, tLong, tLat) {
     /*määränpää */
 
     var location = fromLoc + '|' + toLoc;
-    console.log(location + "tämä tulee näkyviin?");
     var distance = JSON.parse($.ajax({
         type: "GET", //rest Type-->
         dataType: 'json',
@@ -19,12 +13,8 @@ function getDistance(fLong, fLat, tLong, tLat) {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log(data);
         }
     }).responseText);
-    console.log(distance);
     var dist = distance.routes[0]["summary"]["distance"];
-    console.log(dist);
-    console.log(distance);
     return dist;
 }
