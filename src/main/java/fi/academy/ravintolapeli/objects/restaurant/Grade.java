@@ -1,10 +1,12 @@
 package fi.academy.ravintolapeli.objects.restaurant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 @Component
 public class Grade {//ravintolaolion sisäinen olio
+    @JsonIgnore
     private LocalDate date;
     private String grade;
     private int score;

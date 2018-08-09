@@ -1,5 +1,6 @@
 package fi.academy.ravintolapeli.objects.restaurant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Component;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 @Component
 public class Restaurant {//ravintolaolio, joka vastaa databasen ravintolaa
+    @JsonIgnore
     @Id
     private String _id;
     private Address address;
