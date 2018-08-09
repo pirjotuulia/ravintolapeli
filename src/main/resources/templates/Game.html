@@ -130,10 +130,9 @@
     }
 </script>
 <script>
-    function moveCard(index,borough,cuisine,name) {
+    function moveCard(index) {
         // Tämä pyyntö ensin käynnistää metodin, joka siirtää kortin pelattujen listalle
         $.ajax("http://localhost:8080/card/" + index, {type: 'GET'});
-        //getRestaurants(borough,cuisine,name);
         document.location.reload(true);
     }
 </script>
