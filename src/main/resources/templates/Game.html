@@ -244,7 +244,7 @@
             <strong>Game Over: </strong>You have run out of money and can't pay for the trip! The Uber driver calls the
             police, who takes you away!
         </div>
-        <div th:if="${gamestats.getGameover().getHealthLeft()}lt 1}" class="alert alert-danger fade in col-sm-12">
+        <div th:if="${gamestats.getGameover().getHealthLeft()}lt 1" class="alert alert-danger fade in col-sm-12">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Game Over: </strong>You keel over, feeling sick in the stomach! You have run out of health points!
         </div>
