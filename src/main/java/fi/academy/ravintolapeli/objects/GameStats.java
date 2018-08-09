@@ -101,12 +101,12 @@ public class GameStats {//pelitilanneolio
     public void gameOver() {//kun peli on pelattu loppuun
         this.end = true;
         setFinalStats();
-        this.setHand(new ArrayList<>()); //tyhjennetään käsi, riippumatta siitä, oliko se jo tyhjä vai loppuiko peli muusta syystä
-        this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
-        this.setMissionMode(false); //asetetaan missionMode kortinvalinta-tilaan
-        //LastMoves jätetään ennalleen, eli pelihistoria säilyy
-        this.setHealth(originalHealth);//jos uusi vuoro alkaa täydellä terveydellä
-        this.setMoney(originalMoney);//jos uusi vuoro alkaa täysillä rahoilla
+//        this.setHand(new ArrayList<>()); //tyhjennetään käsi, riippumatta siitä, oliko se jo tyhjä vai loppuiko peli muusta syystä
+//        this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
+//        this.setMissionMode(false); //asetetaan missionMode kortinvalinta-tilaan
+//        //LastMoves jätetään ennalleen, eli pelihistoria säilyy
+//        this.setHealth(originalHealth);//jos uusi vuoro alkaa täydellä terveydellä
+//        this.setMoney(originalMoney);//jos uusi vuoro alkaa täysillä rahoilla
     }
 
     public void setFinalStats() {

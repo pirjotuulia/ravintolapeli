@@ -34,11 +34,11 @@
             margin: 0.5em;
             padding: 0.3em;
             height: 25em;
-            background: rgb(30,87,153); /* Old browsers */
-            background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,1) 50%, rgba(32,124,202,1) 51%, rgba(125,185,232,1) 100%); /* FF3.6-15 */
-            background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%); /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(to bottom, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+            background: rgb(30, 87, 153); /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(30, 87, 153, 1) 0%, rgba(41, 137, 216, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(30, 87, 153, 1) 0%, rgba(41, 137, 216, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(30, 87, 153, 1) 0%, rgba(41, 137, 216, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e5799', endColorstr='#7db9e8', GradientType=0); /* IE6-9 */
         }
 
         .title {
@@ -80,35 +80,42 @@
             border-bottom-right-radius: 5px;
             border-bottom-left-radius: 5px;
         }
+
         .card:nth-of-type(1) {
-            top:4.0em;
-            left:5em;
+            top: 4.0em;
+            left: 5em;
         }
+
         .card:nth-of-type(2) {
-            top:6.5em;
-            left:4em;
+            top: 6.5em;
+            left: 4em;
         }
+
         .card:nth-of-type(3) {
-            top:9.0em;
-            left:3em;
+            top: 9.0em;
+            left: 3em;
         }
+
         .card:nth-of-type(4) {
-            top:11.5em;
-            left:2em;
+            top: 11.5em;
+            left: 2em;
         }
+
         .card:nth-of-type(5) {
-            top:14.0em;
-            left:1em;
+            top: 14.0em;
+            left: 1em;
         }
+
         .noselect {
-            cursor:pointer;
+            cursor: pointer;
             -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Safari */
             -khtml-user-select: none; /* Konqueror HTML */
             -moz-user-select: none; /* Firefox */
             -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+            user-select: none;
+            /* Non-prefixed version, currently
+                                             supported by Chrome and Opera */
         }
     </style>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
@@ -130,12 +137,12 @@
         var currentLoc = cx + cy;
 
         var restaurants = [
-            ["Restaurant",x,y],
-            ["Current location",cx,cy]
+            ["Restaurant", x, y],
+            ["Current location", cx, cy]
 
         ];
 
-        var map = L.map(element).setView([cx,cy], 10);
+        var map = L.map(element).setView([cx, cy], 10);
         mapLink =
             '<a href="http://openstreetmap.org">OpenStreetMap</a>';
         L.tileLayer(
@@ -144,7 +151,7 @@
             }).addTo(map);
 
         for (var i = 0; i < restaurants.length; i++) {
-            marker = new L.marker([restaurants[i][1],restaurants[i][2]])
+            marker = new L.marker([restaurants[i][1], restaurants[i][2]])
                 .bindPopup(restaurants[i][0])
                 .addTo(map);
         }
@@ -158,7 +165,7 @@
     }
 </script>
 <script>
-    function cycleDeck (index) {
+    function cycleDeck(index) {
         $.ajax("http://localhost:8080/top/" + index, {type: 'GET'});
         document.location.reload(true);
     }
@@ -170,7 +177,7 @@
     }
 </script>
 <script th:inline="javascript">
-    function selectRestaurant (fLong, fLat, tLong, tLat, index) {
+    function selectRestaurant(fLong, fLat, tLong, tLat, index) {
         // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
         var distance = getDistance(fLat, fLong, tLat, tLong);
         // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
@@ -191,37 +198,51 @@
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <p th:inline="text"><span style="color:red" class="glyphicon glyphicon-heart">   </span> [[${gamestats.getHealth()}
+            <p th:inline="text"><span style="color:red" class="glyphicon glyphicon-heart">   </span>
+                [[${gamestats.getHealth()}
                 + '/100']]</p>
         </div>
         <div class="col-sm-4">
-            <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span> [[${#numbers.formatDecimal(gamestats.getMoney(),
+            <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>
+                [[${#numbers.formatDecimal(gamestats.getMoney(),
                 1, 2)} + '/200.00']]</p>
         </div>
         <div th:if="${gamestats.isLastMove()}" class="hide col-sm-4">
-            <p  th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Current location </p>
+            <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span
+                    style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Current location </p>
         </div>
         <div th:unless="${gamestats.isLastMove()}" class="hide col-sm-4">
-            <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
+            <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span
+                    style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square </p>
         </div>
         <div class="col-sm-4">
             <button class="btn-primary" onclick="resetGame()">Start New Game</button>
         </div>
     </div>
     <div class="row">
-    <div th:if="${gamestats.isLastMove()}" class="alert alert-success fade in col-sm-12">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Your Action: </strong>You traveled <span th:text="${#numbers.formatDecimal(gamestats.getLastMove().getDistanceInMiles(),1,1)}"></span> miles in Uber, which cost you $<span th:text="${#numbers.formatDecimal(gamestats.getLastMove().getUsedMoney(),1,2)}"></span>. You dined at to <strong th:text="${gamestats.getLastMove().getRestaurantName()}"></strong>, which cost you <span th:text="${gamestats.getLastMove().getUsedHealth()}"></span> points of health.
-    </div>
+        <div th:if="${gamestats.isLastMove()}" class="alert alert-success fade in col-sm-12">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Your Action: </strong>You traveled <span
+                th:text="${#numbers.formatDecimal(gamestats.getLastMove().getDistanceInMiles(),1,1)}"></span> miles in
+            Uber, which cost you $<span
+                th:text="${#numbers.formatDecimal(gamestats.getLastMove().getUsedMoney(),1,2)}"></span>. You dined at to
+            <strong th:text="${gamestats.getLastMove().getRestaurantName()}"></strong>, which cost you <span
+                th:text="${gamestats.getLastMove().getUsedHealth()}"></span> points of health.
+        </div>
         <div th:unless="${gamestats.isLastMove()}" class="alert alert-info fade in col-sm-12">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Your Goal: </strong>You work as a food critic in New York: you eat for free, but you have a travel budget. Being a busy person, you use Uber to travel from one restaurant to another. Eating a lot every day is unhealthy, particularly if you eat in a place that hasn't performed well in health inspections, so watch out also for your health! You have five randomized missions, which you can complete in any order, but since transportation is costly, plan wisely.
+            <strong>Your Goal: </strong>You work as a food critic in New York: you eat for free, but you have a travel
+            budget. Being a busy person, you use Uber to travel from one restaurant to another. Eating a lot every day
+            is unhealthy, particularly if you eat in a place that hasn't performed well in health inspections, so watch
+            out also for your health! You have five randomized missions, which you can complete in any order, but since
+            transportation is costly, plan wisely.
         </div>
     </div>
     <div class="row" th:if="${gamestats.isGameOver()}">
         <div th:if="${gamestats.isLastMove()}" class="alert alert-danger fade in col-sm-12">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Game Over: </strong>You have run out of money and can't pay for the trip! The Uber driver calls the police, who takes you away!
+            <strong>Game Over: </strong>You have run out of money and can't pay for the trip! The Uber driver calls the
+            police, who takes you away!
         </div>
         <div th:if="${gamestats.isLastMove()}" class="alert alert-danger fade in col-sm-12">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -231,14 +252,17 @@
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>You Win: </strong>Congratulations! You have successfully completed all your missions!
         </div>
-        <div id="main" class="row">
+    </div>
+    <div id="main" class="row">
         <div class="col-sm-6">
             <h3>In Hand</h3>
             <div id="hand" class="field" style="background-color: #DDD">
                 <div class="card slidable" th:each="card,iter: ${gamestats.hand}" th:id="${card._id}">
                     <div class='inner'>
                         <div class="title" th:text="${card.title}" th:onclick="|cycleDeck('${iter.index}')|"></div>
-                        <div class="illo"><img class='pic center' th:src="${card.imageurl}" th:onclick="|moveCard('${iter.index}','${card.borough}','${card.cuisine}','${card.name}')|"></div>
+                        <div class="illo"><img class='pic center' th:src="${card.imageurl}"
+                                               th:onclick="|moveCard('${iter.index}','${card.borough}','${card.cuisine}','${card.name}')|">
+                        </div>
                         <div class="story" th:text="${card.story}"></div>
                     </div>
                 </div>
@@ -267,10 +291,17 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
-                <tr class="slidable noselect" th:if="${gamestats.isMissionMode()}==true" th:each="restaurant, iter: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
+                <tr class="slidable noselect" th:if="${gamestats.isMissionMode()}==true"
+                    th:each="restaurant, iter: ${gamestats.getRestaurantList()}"
+                    th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
-                    <td><button class="btn-primary" th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.getLongitude()}','${restaurant.getLatitude()}','${iter.index}')|">Go!</button></td>
+                    <td>
+                        <button class="btn-primary"
+                                th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.getLongitude()}','${restaurant.getLatitude()}','${iter.index}')|">
+                            Go!
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -280,14 +311,14 @@
         </div>
     </div>
 </div>
-</div>
 <footer style="padding:3em">Copyright 2018 Mikko, Elmo ja Pirjo</footer>
 
 <script th:inline="javascript">
     var lat = [[${gamestats.getLatitude()}]];
     var long = [[${gamestats.getLongitude()}]];
     window.onload = mappi(lat, long), reset;
-    function reset () {
+
+    function reset() {
         window.scrollTo(0, 0);
     }
 </script>
