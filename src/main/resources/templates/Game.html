@@ -115,24 +115,54 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script>
+<script th:inline="javascript">
     function mappi(long, lat) {
         $("#osm-map").remove();
         $("#mapHere").append("<div id='osm-map' style='height:300px'></div>");
 
         var element = document.getElementById('osm-map');
-        var map = L.map(element);
 
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        //Kommentoituna "vanha"malli. Poistan kun tämä toimii halutusti.
+        // var map = L.map(element);
+
+        // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        // }).addTo(map);
 
         var x = "" + long;
         var y = "" + lat;
-        var target = L.latLng(x, y);
-        map.setView(target, 10);
+        console.log(x + y);
+        // var target = L.latLng(x, y);
+        // map.setView(target, 10);
 
-        L.marker(target).addTo(map);
+        // L.marker(target).addTo(map);
+
+
+        var cx = [[${gamestats.getLatitude()}]];
+        var cy = [[${gamestats.getLongitude()}]];
+
+        var currentLoc = cx + cy;
+        console.log(currentLoc);
+
+        var restaurants = [
+            ["Restaurant",x,y],
+            ["Current location",cx,cy]
+
+        ];
+
+        var map = L.map(element).setView([40.8420949,-73.9246646], 10);
+        mapLink =
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; ' + mapLink + ' Contributors',
+            }).addTo(map);
+
+        for (var i = 0; i < restaurants.length; i++) {
+            marker = new L.marker([restaurants[i][1],restaurants[i][2]])
+                .bindPopup(restaurants[i][0])
+                .addTo(map);
+        }
     }
 </script>
 <script>

@@ -45,7 +45,7 @@ public class GameController {
             this.stats.setRestaurantList(restaurantList);
         }
 
-        if (this.stats.getHand().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
+        if (this.stats.getPlayedMissions().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
             ResponseEntity<List<Mission>> response = restTemplate.exchange(
                     "http://localhost:8080/missions/",
                     HttpMethod.GET, null,
