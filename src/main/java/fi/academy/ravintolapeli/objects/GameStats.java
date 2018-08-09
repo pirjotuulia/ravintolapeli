@@ -20,6 +20,7 @@ public class GameStats {//pelitilanneolio
     private List<Restaurant> restaurantList;
     private String longitude;
     private String latitude;
+    private GameOver gameover;
 
     //asetetaan alkuarvot
     public GameStats() {
@@ -35,6 +36,7 @@ public class GameStats {//pelitilanneolio
         this.restaurantList = restaurantList;
         this.latitude = "40.7676919";
         this.longitude = "-73.98513559999999";
+        this.gameover = new GameOver();
     }
 
     public GameStats(int health, int money, String foodcriticName, List<Mission> hand, List<Mission> playedMissions) {
@@ -60,14 +62,16 @@ public class GameStats {//pelitilanneolio
                 '}';
     }
 
-    //vuoron päätteeksi tehdään tämä setti tietojen päivittämiseksi ja vuoron lisäämiseksi
+    //vuoron päätteeksi tehdään tämä setti tietojen päivittämiseksi ja vuoron lisäämiseksi sekä gameover-olion päivittämiseksi
     public GameStats makeMove(int restaurantIndex, double distance) {
         Restaurant restaurant = this.restaurantList.get(restaurantIndex);
         int restaurantScore = restaurant.getGrades().get(0).getScore(); // tallettaa ravintolan scoren
+        this.gameover.addDistanceCovered(distance); //lisätään kuljettu matka gameoveriin
+        this.gameover.addRestaurantCovered();//lisätään yksi ravintola gameoveriin
         LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), distance, false, restaurant.getName()); //tekee pelatun vuoron tiedoista LastMove-olion
         useHealth(restaurantScore);// vähentää terveyttä ravintolan scoren verran
         useMoney(move.getUsedMoney()); //käyttää rahaa matkan taksan verran
-        setNewCoordinates(restaurant);
+        setNewCoordinates(restaurant); //asetetaan pelaajalle uusi sijainti
         this.moves.add(move); // lisää pelatun vuoron vuorojen listalle
         setMissionMode(false); // asettaa missionModen kortinvalinta-tilaan
         return this;//palauttaa GameStats-olion (tarvitaanko tätä edes?)
@@ -101,12 +105,18 @@ public class GameStats {//pelitilanneolio
     }
 
     public void gameOver() {//kun peli on pelattu loppuun
+        setFinalStats();
         this.setHand(new ArrayList<>()); //tyhjennetään käsi, riippumatta siitä, oliko se jo tyhjä vai loppuiko peli muusta syystä
         this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
         this.setMissionMode(false); //asetetaan missionMode kortinvalinta-tilaan
         //LastMoves jätetään ennalleen, eli pelihistoria säilyy
         this.setHealth(originalHealth);//jos uusi vuoro alkaa täydellä terveydellä
         this.setMoney(originalMoney);//jos uusi vuoro alkaa täysillä rahoilla
+    }
+
+    public void setFinalStats() {
+        this.gameover.setHealthLeft(getHealth());
+        this.gameover.setMoneyLeft(getMoney());
     }
 
     public int useHealth(int used) {
@@ -198,6 +208,14 @@ public class GameStats {//pelitilanneolio
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public GameOver getGameover() {
+        return gameover;
+    }
+
+    public void setGameover(GameOver gameover) {
+        this.gameover = gameover;
     }
 
     public void putOnTop(int index) {
