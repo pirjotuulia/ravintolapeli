@@ -2,7 +2,9 @@ function choose(event) {
     console.log("Täällä ollaan!");
     var td = $(event.target).parent().parent();
     var parent = td.parent();
-    var row = parent.index(td);
+    var $parent = td.parent().children();
+    var row = $parent.index(td);
+
     console.log(row);
     // console.log(row);
     // var restaurant = JSON.parse(sessionStorage.restaurants)[row];
@@ -19,4 +21,7 @@ function choose(event) {
 
     return;
 }
-
+$.fn.getIndex = function(){
+    var $p=$(this).parent().children();
+    return $p.index(this);
+}

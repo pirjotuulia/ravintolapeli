@@ -27,6 +27,18 @@ public class GameController {
 
     @GetMapping("/")
     public String game(Model model) {
+        if (this.stats.getPlayedMissions().size()>0) {
+            Mission last = stats.getPlayedMissions().get(stats.getPlayedMissions().size()-1);
+            if (last.getName()=="") last.setName("all");
+            System.out.println(last);
+            ResponseEntity<List<Restaurant>> restaurantResponse = restTemplate.exchange(
+                    "http://localhost:8080/list/"+last.getBorough()+"/"+last.getCuisine()+"/"+last.getName(),
+                    HttpMethod.GET, null,
+                    new ParameterizedTypeReference<List<Restaurant>>() {
+                    });
+            model.addAttribute("restaurants", restaurantResponse.getBody());
+        }
+
         if (this.stats.getHand().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
             ResponseEntity<List<Mission>> response = restTemplate.exchange(
                     "http://localhost:8080/missions/",

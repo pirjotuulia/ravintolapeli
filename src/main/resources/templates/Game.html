@@ -137,39 +137,23 @@
     }
 </script>
 <script>
-    function getRestaurants(borough, cuisine, name) {
-        if (name == "") name = "all";
-        var result = JSON.parse($.ajax({
-            type: "GET",
-            url: "http://localhost:8080/list/" + borough + "/" + cuisine + "/" + name + "/",
-            async: false
-        }).responseText);
-        sessionStorage.restaurants = JSON.stringify(result);
-        $("#table").find("tbody").find("tr").empty();
-        for (var i = 0; i < result.length; i++) {
-            console.log(result[i]);
-            $("#table").append("<tr>" +
-                "<td>" + result[i].name + "</td>" +
-                "<td>" + result[i].address.street + "</td>" +
-                "<td><button class='" + i + "'>Choose</button></td>" +
-                "</tr>");
-            $('button.' + i).on('click', function (event) {
-                event.preventDefault();
-                choose(event);
-            });
-            $("#table").find("tr").last()
-                .attr("onclick", "mappi('" + result[i].address.coord[1] + "','" + result[i].address.coord[0] + "')");
-        }
+    function moveCard(index,borough,cuisine,name) {
+        // Tämä pyyntö ensin käynnistää metodin, joka siirtää kortin pelattujen listalle
+        $.ajax("http://localhost:8080/card/" + index, {type: 'GET'});
+        //getRestaurants(borough,cuisine,name);
+        document.location.reload(true);
+    }
+</script>
+<script>
+    function cycleDeck (index) {
+        $.ajax("http://localhost:8080/top/" + index, {type: 'GET'});
+        document.location.reload(true);
     }
 </script>
 
 <body>
-<script>
-
-</script>
-<div class="jumbotron text-center">
+<div class="page-header text-center">
     <h1>Restaurant Critic</h1>
-    <p>Placeholder</p>
 </div>
 
 <div class="container">
@@ -198,22 +182,24 @@
                 <div class="card slidable" th:each="card,iter: ${gamestats.hand}" th:id="${card._id}">
                     <div class='inner'>
                         <div class="title" th:text="${card.title}" th:onclick="|cycleDeck('${iter.index}')|"></div>
-                        <div class="illo"><img class='pic center' th:src="${card.imageurl}" th:onclick="|getRestaurants('${card.borough}','${card.cuisine}','${card.name}')|"></div>
+                        <div class="illo"><img class='pic center' th:src="${card.imageurl}" th:onclick="|moveCard('${iter.index}','${card.borough}','${card.cuisine}','${card.name}')|"></div>
                         <div class="story" th:text="${card.story}"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-            function cycleDeck (index) {
-                $.ajax("http://localhost:8080/top/" + index, {type: 'GET'});
-                document.location.reload(true);
-            }
-        </script>
         <div class="col-sm-6">
             <h3>In Play</h3>
-            <div id="play" class="field" style="background: #DDD;">
+            <div id="play" class="field" style="background-color: #DDD">
+                <div class="card slidable" th:each="card,iter: ${gamestats.playedMissions}" th:id="${card._id}">
+                    <div class='inner'>
+                        <div class="title" th:text="${card.title}"></div>
+                        <div class="illo"><img class='pic center' th:src="${card.imageurl}"></div>
+                        <div class="story" th:text="${card.story}"></div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
     <div class="row">
@@ -225,6 +211,11 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
+                <tr class="slidable" th:each="restaurant: ${restaurants}" th:id="${restaurant._id}" th:onclick="|mappi('${restaurant.address.coord[1]}','${restaurant.address.coord[0]}')|">
+                    <td th:text="${restaurant.name}"></td>
+                    <td th:text="${restaurant.address.street}"></td>
+                    <td><button>Test</button></td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -237,9 +228,9 @@
     </div>
 </div>
 </div>
+<footer>Content</footer>
 
 <script>
-
     window.onload = mappi('40.7676919', '-73.98513559999999');
 </script>
 <script type="text/javascript" th:src="@{/js/choose.js}">
