@@ -198,8 +198,6 @@
         <div th:unless="${gamestats.isLastMove()}" class="col-sm-4">
             <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
         </div>
-        <div th:if="${gamestats.isLastMove()}" class="lastmove">
-        </div>
     </div>
     <div class="row">
     <div th:if="${gamestats.isLastMove()}" class="alert alert-success fade in col-sm-12">
