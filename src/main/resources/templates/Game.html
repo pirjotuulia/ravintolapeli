@@ -112,7 +112,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
-<script>
+<script th:inline="javascript">
     function mappi(long, lat) {
         $("#osm-map").remove();
         $("#mapHere").append("<div id='osm-map' style='height:300px'></div>");
@@ -134,9 +134,16 @@
 
         // L.marker(target).addTo(map);
 
+
+        var cx = [[${gamestats.getLatitude()}]];
+        var cy = [[${gamestats.getLongitude()}]];
+
+        var currentLoc = cx + cy;
+        console.log(currentLoc);
+
         var restaurants = [
             ["Restaurant",x,y],
-            ["Current location",40.8420949,-73.9246646]
+            ["Current location",cx,cy]
 
         ];
 
