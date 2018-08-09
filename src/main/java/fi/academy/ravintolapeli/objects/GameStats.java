@@ -25,8 +25,8 @@ public class GameStats {//pelitilanneolio
 
     //asetetaan alkuarvot
     public GameStats() {
-        this.originalHealth = 100;
-        this.originalMoney = 200;
+        this.originalHealth = 80;
+        this.originalMoney = 150;
         this.health = originalHealth;
         this.money = originalMoney;
         this.foodcriticName = "Hugh Fearnley-Whittingstall";
@@ -101,12 +101,12 @@ public class GameStats {//pelitilanneolio
     public void gameOver() {//kun peli on pelattu loppuun
         this.end = true;
         setFinalStats();
-        this.setHand(new ArrayList<>()); //tyhjennetään käsi, riippumatta siitä, oliko se jo tyhjä vai loppuiko peli muusta syystä
-        this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
-        this.setMissionMode(false); //asetetaan missionMode kortinvalinta-tilaan
-        //LastMoves jätetään ennalleen, eli pelihistoria säilyy
-        this.setHealth(originalHealth);//jos uusi vuoro alkaa täydellä terveydellä
-        this.setMoney(originalMoney);//jos uusi vuoro alkaa täysillä rahoilla
+//        this.setHand(new ArrayList<>()); //tyhjennetään käsi, riippumatta siitä, oliko se jo tyhjä vai loppuiko peli muusta syystä
+//        this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
+//        this.setMissionMode(false); //asetetaan missionMode kortinvalinta-tilaan
+//        //LastMoves jätetään ennalleen, eli pelihistoria säilyy
+//        this.setHealth(originalHealth);//jos uusi vuoro alkaa täydellä terveydellä
+//        this.setMoney(originalMoney);//jos uusi vuoro alkaa täysillä rahoilla
     }
 
     public void setFinalStats() {
