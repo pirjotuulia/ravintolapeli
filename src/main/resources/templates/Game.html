@@ -178,9 +178,20 @@
             <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>[[${#numbers.formatDecimal(gamestats.getMoney(),
                 1, 2)} + '/100.00']]</p>
         </div>
-        <div class="col-sm-4">
-            <p><span style="color:blue" class="glyphicon glyphicon-map-marker"></span> Times Square</p>
+        <!--<div th:if="${gamestats.isLastMove()}" class="col-sm-4">-->
+            <!--<p  th:inline="text"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> [[${gamestats.getLastMove().getRestaurantName()]] </p>-->
+        <!--</div>-->
+        <div th:unless="${gamestats.isLastMove()}" class="col-sm-4">
+            <p th:inline="text"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
         </div>
+        <!--<div th:if="${gamestats.isLastMove()}" class="lastmove">-->
+            <!--<p>Distance in miles: </p>-->
+            <!--<p th:text="${gamestats.getLastMove().getDistanceInMiles()}"></p>-->
+            <!--<p>Travel costs: </p>-->
+            <!--<p th:text="${gamestats.getLastMove().getUsedMoney()}"></p>-->
+            <!--<p>Health effect: </p>-->
+            <!--<p th:text="${gamestats.getLastMove().getUsedHealth()}"></p>-->
+        <!--</div>-->
     </div>
     <div id="main" class="row">
         <div class="col-sm-6">
