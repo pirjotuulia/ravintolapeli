@@ -66,8 +66,8 @@ public class GameController {
     }
 
     @GetMapping("/play")
-    public String play(@RequestBody int index, Restaurant restaurant, double distance, int time, Model model) {
-        this.stats = this.stats.makeMove(index, restaurant, distance, time); //päivitetään statsit
+    public String play(@RequestBody Restaurant restaurant, double distance, int time, Model model) {
+        this.stats = this.stats.makeMove(restaurant, distance, time); //päivitetään statsit
         model.addAttribute("gamestats", this.stats);
         if (this.stats.getHand().isEmpty()||this.stats.getHealth()<=0||this.stats.getMoney()<=0) { //jos peli loppuu joko terveyden, rahojen tai korttien loppumisen vuoksi
             this.stats.gameOver();

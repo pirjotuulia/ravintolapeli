@@ -51,7 +51,7 @@ public class GameStats {//pelitilanneolio
     }
 
     //vuoron päätteeksi tehdään tämä setti tietojen päivittämiseksi ja vuoron lisäämiseksi
-    public GameStats makeMove(int index, Restaurant restaurant, double distance, int time) {
+    public GameStats makeMove(Restaurant restaurant, double distance, int time) {
         int restaurantScore = restaurant.getGrades().get(0).getScore(); // tallettaa ravintolan scoren
         LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), time, distance, false); //tekee pelatun vuoron tiedoista LastMove-olion
         useHealth(restaurantScore);// vähentää terveyttä ravintolan scoren verran
