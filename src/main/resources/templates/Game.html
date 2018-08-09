@@ -175,13 +175,13 @@
         </div>
         <div class="col-sm-4">
             <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>[[${#numbers.formatDecimal(gamestats.getMoney(),
-                1, 2)} + '/100.00']]</p>
+                1, 2)} + '/200.00']]</p>
         </div>
         <div th:if="${gamestats.isLastMove()}" class="col-sm-4">
             <p  th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Current location </p>
         </div>
         <div th:unless="${gamestats.isLastMove()}" class="col-sm-4">
-            <p th:inline="text"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
+            <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
         </div>
         <div th:if="${gamestats.isLastMove()}" class="lastmove">
             <p>Distance in miles: </p>
@@ -242,7 +242,7 @@
     </div>
 </div>
 </div>
-<footer>Content</footer>
+<footer>Copyright 2018 Mikko, Elmo ja Pirjo</footer>
 
 <script th:inline="javascript">
     var lat = [[${gamestats.getLatitude()}]];

@@ -8,6 +8,8 @@ import java.util.List;
 
 @Component
 public class GameStats {//pelitilanneolio
+    private int originalMoney;
+    private int originalHealth;
     private int health;
     private double money;
     private String foodcriticName;
@@ -21,8 +23,10 @@ public class GameStats {//pelitilanneolio
 
     //asetetaan alkuarvot
     public GameStats() {
-        this.health = 100;
-        this.money = 100;
+        this.originalHealth = 100;
+        this.originalMoney = 200;
+        this.health = originalHealth;
+        this.money = originalMoney;
         this.foodcriticName = "Hugh Fearnley-Whittingstall";
         this.hand = new ArrayList<>();
         this.playedMissions = new ArrayList<>();
@@ -101,8 +105,8 @@ public class GameStats {//pelitilanneolio
         this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
         this.setMissionMode(false); //asetetaan missionMode kortinvalinta-tilaan
         //LastMoves jätetään ennalleen, eli pelihistoria säilyy
-        this.setHealth(100);//jos uusi vuoro alkaa täydellä terveydellä
-        this.setMoney(100);//jos uusi vuoro alkaa täysillä rahoilla
+        this.setHealth(originalHealth);//jos uusi vuoro alkaa täydellä terveydellä
+        this.setMoney(originalMoney);//jos uusi vuoro alkaa täysillä rahoilla
     }
 
     public int useHealth(int used) {
