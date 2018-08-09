@@ -116,7 +116,6 @@
 </head>
 <script>
     function mappi(long, lat) {
-        console.log("Mappi mainittu!");
         $("#osm-map").remove();
         $("#mapHere").append("<div id='osm-map' style='height:300px'></div>");
 
@@ -210,12 +209,21 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
-                <tr class="slidable" th:each="restaurant: ${restaurants}" th:id="${restaurant._id}" th:onclick="|mappi('${restaurant.address.coord[1]}','${restaurant.address.coord[0]}')|">
+                <tr class="slidable" th:each="restaurant,iter: ${restaurants}" th:id="${restaurant._id}" th:onclick="|mappi('${restaurant.address.coord[1]}','${restaurant.address.coord[0]}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
-                    <td><button>Test</button></td>
+
                 </tr>
                 </tbody>
+                <script>
+                    function selectRestaurant (fLong, fLat, tLong, tLat, index) {
+                        // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
+                        var distance = getDistance(fLong, fLat, tLong, tLat);
+                        // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
+                        $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
+                        document.location.reload(true);
+                    }
+                </script>
             </table>
         </div>
         <div id="mapHere" class="col-sm-6">
@@ -232,7 +240,7 @@
 <script>
     window.onload = mappi('40.7676919', '-73.98513559999999');
 </script>
-<script type="text/javascript" th:src="@{/js/choose.js}">
-</script>
+<!--<script type="text/javascript" th:src="@{/js/choose.js}">
+</script>-->
 </body>
 </html>
