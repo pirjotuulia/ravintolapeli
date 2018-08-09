@@ -122,21 +122,9 @@
 
         var element = document.getElementById('osm-map');
 
-        //Kommentoituna "vanha"malli. Poistan kun tämä toimii halutusti.
-        // var map = L.map(element);
-
-        // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        // }).addTo(map);
-
         var x = "" + long;
         var y = "" + lat;
         console.log(x + y);
-        // var target = L.latLng(x, y);
-        // map.setView(target, 10);
-
-        // L.marker(target).addTo(map);
-
 
         var cx = [[${gamestats.getLatitude()}]];
         var cy = [[${gamestats.getLongitude()}]];
@@ -150,7 +138,7 @@
 
         ];
 
-        var map = L.map(element).setView([40.8420949,-73.9246646], 10);
+        var map = L.map(element).setView([cx,cy], 10);
         mapLink =
             '<a href="http://openstreetmap.org">OpenStreetMap</a>';
         L.tileLayer(
