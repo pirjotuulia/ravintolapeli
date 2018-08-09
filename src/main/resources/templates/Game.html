@@ -166,6 +166,12 @@
         document.location.reload(true);
     }
 </script>
+<script>
+    function resetGame() {
+        $.ajax("http://localhost:8080/reset", {type: 'GET'});
+        document.location.reload(true);
+    }
+</script>
 <script th:inline="javascript">
     function selectRestaurant (fLong, fLat, tLong, tLat, index) {
         // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
@@ -196,14 +202,16 @@
             <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span> [[${#numbers.formatDecimal(gamestats.getMoney(),
                 1, 2)} + '/200.00']]</p>
         </div>
-        <div th:if="${gamestats.isLastMove()}" class="col-sm-4">
+        <div th:if="${gamestats.isLastMove()}" class="hide col-sm-4">
             <p  th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Current location </p>
         </div>
-        <div th:unless="${gamestats.isLastMove()}" class="col-sm-4">
+        <div th:unless="${gamestats.isLastMove()}" class="hide col-sm-4">
             <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
         </div>
-        <div th:if="${gamestats.isLastMove()}" class="lastmove">
+        <div class="col-sm-4">
+            <button class="btn-primary" onclick="resetGame()">Reset Game</button>
         </div>
+
     </div>
     <div class="row">
     <div th:if="${gamestats.isLastMove()}" class="alert alert-success fade in col-sm-12">
