@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class Restaurant {//ravintolaolio, joka vastaa databasen ravintolaa
+public class Restaurant implements Comparable<Restaurant> {//ravintolaolio, joka vastaa databasen ravintolaa
     @JsonIgnore
     @Id
     private String _id;
@@ -109,5 +109,10 @@ public class Restaurant {//ravintolaolio, joka vastaa databasen ravintolaa
 
     public void setRestaurant_id(int restaurant_id) {
         this.restaurant_id = restaurant_id;
+    }
+
+    @Override
+    public int compareTo(Restaurant restaurant) {
+        return this.name.compareTo(restaurant.name);
     }
 }

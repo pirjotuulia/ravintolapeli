@@ -210,10 +210,10 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
-                <tr class="slidable" th:each="restaurant: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLongitude()}','${restaurant.getLatitude()}')|">
+                <tr class="slidable" th:each="restaurant, iter: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
-                    <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.address.coord[1]}','${restaurant.address.coord[0]}','${iter.index}')|">Go!</button></td>
+                    <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.getLongitude()}','${restaurant.getLatitude()}','${iter.index}')|">Go!</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -222,18 +222,15 @@
             <h3>Map View</h3>
         </div>
     </div>
-    <div class="play">
-
-    </div>
 </div>
 </div>
 <footer>Content</footer>
 
-<script>
-    window.onload = mappi('40.7676919', '-73.98513559999999');
+<script th:inline="javascript">
+    var lat = [[${gamestats.getLatitude()}]];
+    var long = [[${gamestats.getLongitude()}]];
+    console.log(lat, long);
+    window.onload = mappi(lat, long);
 </script>
-<!--<script>-->
-<!--<script type="text/javascript" th:src="@{/js/choose.js}">-->
-<!--</script>-->
 </body>
 </html>

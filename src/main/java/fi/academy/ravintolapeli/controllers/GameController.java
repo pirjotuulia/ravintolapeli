@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class GameController {
@@ -36,7 +39,11 @@ public class GameController {
                     HttpMethod.GET, null,
                     new ParameterizedTypeReference<List<Restaurant>>() {
                     });
-            this.stats.setRestaurantList(restaurantResponse.getBody());
+            List<Restaurant> restaurantList = restaurantResponse.getBody();
+            Collections.shuffle(restaurantList);
+            restaurantList = restaurantList.stream().limit(10).collect(Collectors.toList());
+            Collections.sort(restaurantList);
+            this.stats.setRestaurantList(restaurantList);
         }
 
         if (this.stats.getHand().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
