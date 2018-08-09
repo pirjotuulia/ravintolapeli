@@ -126,7 +126,6 @@
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        console.log(long + " " + lat);
         var x = "" + long;
         var y = "" + lat;
         var target = L.latLng(x, y);
@@ -155,7 +154,7 @@
         // var distance = 5;
         // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
         $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
-        //document.location.reload(true);
+        document.location.reload(true);
     }
 </script>
 <body>
@@ -176,10 +175,21 @@
         </div>
         <div class="col-sm-4">
             <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>[[${#numbers.formatDecimal(gamestats.getMoney(),
-                1, 2)} + '/100.00']]</p>
+                1, 2)} + '/200.00']]</p>
         </div>
-        <div class="col-sm-4">
-            <p><span style="color:blue" class="glyphicon glyphicon-map-marker"></span> Times Square</p>
+        <div th:if="${gamestats.isLastMove()}" class="col-sm-4">
+            <p  th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Current location </p>
+        </div>
+        <div th:unless="${gamestats.isLastMove()}" class="col-sm-4">
+            <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
+        </div>
+        <div th:if="${gamestats.isLastMove()}" class="lastmove">
+            <p>Distance in miles: </p>
+            <p th:text="${gamestats.getLastMove().getDistanceInMiles()}"></p>
+            <p>Travel costs: </p>
+            <p th:text="${gamestats.getLastMove().getUsedMoney()}"></p>
+            <p>Health effect: </p>
+            <p th:text="${gamestats.getLastMove().getUsedHealth()}"></p>
         </div>
     </div>
     <div id="main" class="row">
@@ -218,10 +228,10 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
-                <tr class="slidable" th:each="restaurant,iter: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
+                <tr class="slidable" th:if="${gamestats.isMissionMode()}==true" th:each="restaurant, iter: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
-                    <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.address.coord[1]}','${restaurant.address.coord[0]}','${iter.index}')|">Go!</button></td>
+                    <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.getLongitude()}','${restaurant.getLatitude()}','${iter.index}')|">Go!</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -230,16 +240,14 @@
             <h3>Map View</h3>
         </div>
     </div>
-    <div class="play">
-
-    </div>
 </div>
 </div>
-<footer>Content</footer>
+<footer>Copyright 2018 Mikko, Elmo ja Pirjo</footer>
 
-<script>
-    window.onload = mappi('40.7676919', '-73.98513559999999');
+<script th:inline="javascript">
+    var lat = [[${gamestats.getLatitude()}]];
+    var long = [[${gamestats.getLongitude()}]];
+    window.onload = mappi(lat, long);
 </script>
-<script type="text/javascript" th:src="@{/js/distance.js}"></script>
 </body>
 </html>

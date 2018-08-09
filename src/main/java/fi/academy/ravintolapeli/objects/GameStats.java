@@ -8,6 +8,8 @@ import java.util.List;
 
 @Component
 public class GameStats {//pelitilanneolio
+    private int originalMoney;
+    private int originalHealth;
     private int health;
     private double money;
     private String foodcriticName;
@@ -21,8 +23,10 @@ public class GameStats {//pelitilanneolio
 
     //asetetaan alkuarvot
     public GameStats() {
-        this.health = 100;
-        this.money = 100;
+        this.originalHealth = 100;
+        this.originalMoney = 200;
+        this.health = originalHealth;
+        this.money = originalMoney;
         this.foodcriticName = "Hugh Fearnley-Whittingstall";
         this.hand = new ArrayList<>();
         this.playedMissions = new ArrayList<>();
@@ -60,7 +64,7 @@ public class GameStats {//pelitilanneolio
     public GameStats makeMove(int restaurantIndex, double distance) {
         Restaurant restaurant = this.restaurantList.get(restaurantIndex);
         int restaurantScore = restaurant.getGrades().get(0).getScore(); // tallettaa ravintolan scoren
-        LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), distance, false); //tekee pelatun vuoron tiedoista LastMove-olion
+        LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), distance, false, restaurant.getName()); //tekee pelatun vuoron tiedoista LastMove-olion
         useHealth(restaurantScore);// vähentää terveyttä ravintolan scoren verran
         useMoney(move.getUsedMoney()); //käyttää rahaa matkan taksan verran
         setNewCoordinates(restaurant);
@@ -72,6 +76,20 @@ public class GameStats {//pelitilanneolio
     private void setNewCoordinates(Restaurant restaurant) {
         this.longitude = restaurant.getLongitude();
         this.latitude = restaurant.getLatitude();
+    }
+
+    public LastMove getLastMove() {
+        if (isLastMove()) {
+            return this.moves.get(this.moves.size() - 1);
+        }
+        return null;
+    }
+
+    public boolean isLastMove() {
+        if (this.moves.size() > 0) {
+            return true;
+        }
+        return false;
     }
 
     public List<LastMove> getMoves() {
@@ -87,8 +105,8 @@ public class GameStats {//pelitilanneolio
         this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
         this.setMissionMode(false); //asetetaan missionMode kortinvalinta-tilaan
         //LastMoves jätetään ennalleen, eli pelihistoria säilyy
-        this.setHealth(100);//jos uusi vuoro alkaa täydellä terveydellä
-        this.setMoney(100);//jos uusi vuoro alkaa täysillä rahoilla
+        this.setHealth(originalHealth);//jos uusi vuoro alkaa täydellä terveydellä
+        this.setMoney(originalMoney);//jos uusi vuoro alkaa täysillä rahoilla
     }
 
     public int useHealth(int used) {

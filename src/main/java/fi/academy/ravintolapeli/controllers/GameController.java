@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class GameController {
@@ -30,13 +33,16 @@ public class GameController {
         if (this.stats.getPlayedMissions().size()>0) {//jos löytyy pelattu kortti (peli on jo aloitettu)
             Mission last = stats.getPlayedMissions().get(stats.getPlayedMissions().size()-1);
             if (last.getName()=="") last.setName("all");
-            System.out.println(last);
             ResponseEntity<List<Restaurant>> restaurantResponse = restTemplate.exchange(
                     "http://localhost:8080/list/"+last.getBorough()+"/"+last.getCuisine()+"/"+last.getName(),
                     HttpMethod.GET, null,
                     new ParameterizedTypeReference<List<Restaurant>>() {
                     });
-            this.stats.setRestaurantList(restaurantResponse.getBody());
+            List<Restaurant> restaurantList = restaurantResponse.getBody();
+            Collections.shuffle(restaurantList);
+            restaurantList = restaurantList.stream().limit(10).collect(Collectors.toList());
+            Collections.sort(restaurantList);
+            this.stats.setRestaurantList(restaurantList);
         }
 
         if (this.stats.getHand().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
@@ -66,7 +72,7 @@ public class GameController {
     }
 
     @GetMapping("/play/{index}/{distance}")
-    public String play(@PathVariable int index, double distance, Model model) {
+    public String play(@PathVariable int index, @PathVariable double distance, Model model) {
         this.stats = this.stats.makeMove(index, distance); //päivitetään statsit
         model.addAttribute("gamestats", this.stats);
         if (this.stats.getHand().isEmpty()||this.stats.getHealth()<=0||this.stats.getMoney()<=0) { //jos peli loppuu joko terveyden, rahojen tai korttien loppumisen vuoksi
