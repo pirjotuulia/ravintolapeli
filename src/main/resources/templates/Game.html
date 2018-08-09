@@ -124,20 +124,23 @@
 
         var x = "" + long;
         var y = "" + lat;
-        console.log(x + y);
 
         var cx = [[${gamestats.getLatitude()}]];
         var cy = [[${gamestats.getLongitude()}]];
 
         var currentLoc = cx + cy;
-        console.log(currentLoc);
-
         var restaurants = [
             ["Restaurant",x,y],
             ["Current location",cx,cy]
-
         ];
-
+        var blueIcon = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+            iconSize: [25, 35]
+        });
+        var redIcon = L.icon({
+            iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+            iconSize: [25, 35]
+        });
         var map = L.map(element).setView([cx,cy], 10);
         mapLink =
             '<a href="http://openstreetmap.org">OpenStreetMap</a>';
@@ -146,11 +149,12 @@
                 attribution: '&copy; ' + mapLink + ' Contributors',
             }).addTo(map);
 
-        for (var i = 0; i < restaurants.length; i++) {
-            marker = new L.marker([restaurants[i][1],restaurants[i][2]])
-                .bindPopup(restaurants[i][0])
-                .addTo(map);
-        }
+        L.marker([restaurants[0][1],restaurants[0][2]], {icon: blueIcon})
+            .bindPopup(restaurants[0][0])
+            .addTo(map);
+        L.marker([restaurants[1][1],restaurants[1][2]],{icon: redIcon})
+            .bindPopup(restaurants[1][0])
+            .addTo(map);
     }
 </script>
 <script>
