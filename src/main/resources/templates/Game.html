@@ -116,7 +116,6 @@
 </head>
 <script>
     function mappi(long, lat) {
-        console.log("Mappi mainittu!");
         $("#osm-map").remove();
         $("#mapHere").append("<div id='osm-map' style='height:300px'></div>");
 
@@ -149,7 +148,16 @@
         document.location.reload(true);
     }
 </script>
-
+<script>
+    function selectRestaurant (fLong, fLat, tLong, tLat, index) {
+        // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
+        //var distance = getDistance(fLong, fLat, tLong, tLat);
+        var distance = 5;
+        // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
+        $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
+        //document.location.reload(true);
+    }
+</script>
 <body>
 <div class="page-header text-center">
     <h1>Restaurant Critic</h1>
