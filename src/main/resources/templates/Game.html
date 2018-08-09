@@ -182,7 +182,6 @@
     function selectRestaurant (fLong, fLat, tLong, tLat, index) {
         // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
         var distance = getDistance(fLat, fLong, tLat, tLong);
-        // var distance = 5;
         // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
         $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
         document.location.reload(false);
@@ -220,7 +219,7 @@
     <div class="row">
     <div th:if="${gamestats.isLastMove()}" class="alert alert-success fade in col-sm-12">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Your Action: </strong>You traveled <span th:text="${gamestats.getLastMove().getDistanceInMiles()}"></span> miles in Uber, which cost you $<span th:text="${gamestats.getLastMove().getUsedMoney()}"></span>. You dined at to <strong th:text="${gamestats.getLastMove().getRestaurantName()}"></strong>, which cost you <span th:text="${gamestats.getLastMove().getUsedHealth()}"></span> points of health.
+        <strong>Your Action: </strong>You traveled <span th:text="${#numbers.formatDecimal(gamestats.getLastMove().getDistanceInMiles(),1,1)}"></span> miles in Uber, which cost you $<span th:text="${#numbers.formatDecimal(gamestats.getLastMove().getUsedMoney(),1,2)}"></span>. You dined at to <strong th:text="${gamestats.getLastMove().getRestaurantName()}"></strong>, which cost you <span th:text="${gamestats.getLastMove().getUsedHealth()}"></span> points of health.
     </div>
     </div>
     <div id="main" class="row">
