@@ -21,8 +21,8 @@ public class RestaurantController {//rest-rajapinta ravintoloiden tietoihin
                 "{ name: { $regex: '" + ((name.equals("all")) ? "(?s).*" : name) + "' }}, " +
                 "{ borough: { $regex: '" + ((borough.equals("all")) ? "(?s).*" : borough) + "' }}, " +
                 "{ cuisine: { $regex: '" + ((cuisine.equals("all")) ? "(?s).*" : cuisine) + "' }} ] }"))
-                .sort(BasicDBObject.parse("{name:1}"))
-                .limit(10)
+//                .sort(BasicDBObject.parse("{name:1}"))
+//                .limit(10)
                 .toArray();
     }
 }
