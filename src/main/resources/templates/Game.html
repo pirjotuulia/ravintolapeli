@@ -210,10 +210,10 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
-                <tr class="slidable" th:each="restaurant: ${restaurants}" th:id="${restaurant._id}" th:onclick="|mappi('${restaurant.address.coord[1]}','${restaurant.address.coord[0]}')|">
+                <tr class="slidable" th:each="restaurant: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLongitude()}','${restaurant.getLatitude()}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
-                    <td><button>Test</button></td>
+                    <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.address.coord[1]}','${restaurant.address.coord[0]}','${iter.index}')|">Go!</button></td>
                 </tr>
                 </tbody>
             </table>
