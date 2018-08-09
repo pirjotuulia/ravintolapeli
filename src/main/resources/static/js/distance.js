@@ -4,10 +4,10 @@ function getDistance(fLong, fLat, tLong, tLat) {
     // var test = '-73.8642349,40.75356';
     // var jep = '-73.871194,40.6730975';
 
-    var fromLoc = fLong + ',' + fLat;
+    var fromLoc =fLat + ',' + fLong;
     /*Lähtöpiste*/
 
-    var toLoc = tLong + ',' + tLat;
+    var toLoc =tLat + ',' + tLong;
     /*määränpää */
 
     var location = fromLoc + '|' + toLoc;
@@ -25,5 +25,6 @@ function getDistance(fLong, fLat, tLong, tLat) {
     console.log(distance);
     var dist = distance.routes[0]["summary"]["distance"];
     console.log(dist);
+    console.log(distance);
     return dist;
 }

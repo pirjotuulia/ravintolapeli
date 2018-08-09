@@ -148,7 +148,7 @@
 <script>
     function selectRestaurant (fLong, fLat, tLong, tLat, index) {
         // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
-        var distance = getDistance(fLong, fLat, tLat, tLong);
+        var distance = getDistance(fLat, fLong, tLat, tLong);
         // var distance = 5;
         // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
         $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
@@ -247,6 +247,6 @@
     var long = [[${gamestats.getLongitude()}]];
     window.onload = mappi(lat, long);
 </script>
-
+<script type="text/javascript" th:src="@{/js/distance.js}"></script>
 </body>
 </html>
