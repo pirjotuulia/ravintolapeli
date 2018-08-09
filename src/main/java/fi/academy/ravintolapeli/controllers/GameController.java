@@ -33,7 +33,6 @@ public class GameController {
         if (this.stats.getPlayedMissions().size()>0) {//jos löytyy pelattu kortti (peli on jo aloitettu)
             Mission last = stats.getPlayedMissions().get(stats.getPlayedMissions().size()-1);
             if (last.getName()=="") last.setName("all");
-            System.out.println(last);
             ResponseEntity<List<Restaurant>> restaurantResponse = restTemplate.exchange(
                     "http://localhost:8080/list/"+last.getBorough()+"/"+last.getCuisine()+"/"+last.getName(),
                     HttpMethod.GET, null,
