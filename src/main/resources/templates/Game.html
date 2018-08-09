@@ -127,7 +127,6 @@
 
         var cx = [[${gamestats.getLatitude()}]];
         var cy = [[${gamestats.getLongitude()}]];
-
         var currentLoc = cx + cy;
         var restaurants = [
             ["Restaurant",x,y],
@@ -170,11 +169,16 @@
         document.location.reload(true);
     }
 </script>
+<script>
+    function resetGame() {
+        $.ajax("http://localhost:8080/reset", {type: 'GET'});
+        document.location.reload(true);
+    }
+</script>
 <script th:inline="javascript">
     function selectRestaurant (fLong, fLat, tLong, tLat, index) {
         // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
         var distance = getDistance(fLat, fLong, tLat, tLong);
-        // var distance = 5;
         // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
         $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
         document.location.reload(false);
@@ -200,23 +204,41 @@
             <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span> [[${#numbers.formatDecimal(gamestats.getMoney(),
                 1, 2)} + '/200.00']]</p>
         </div>
-        <div th:if="${gamestats.isLastMove()}" class="col-sm-4">
+        <div th:if="${gamestats.isLastMove()}" class="hide col-sm-4">
             <p  th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Current location </p>
         </div>
-        <div th:unless="${gamestats.isLastMove()}" class="col-sm-4">
+        <div th:unless="${gamestats.isLastMove()}" class="hide col-sm-4">
             <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
         </div>
-        <div th:if="${gamestats.isLastMove()}" class="lastmove">
+        <div class="col-sm-4">
+            <button class="btn-primary" onclick="resetGame()">Start New Game</button>
         </div>
     </div>
     <div class="row">
     <div th:if="${gamestats.isLastMove()}" class="alert alert-success fade in col-sm-12">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Your Action: </strong>You traveled <span th:text="${gamestats.getLastMove().getDistanceInMiles()}"></span> miles in Uber, which cost you $<span th:text="${gamestats.getLastMove().getUsedMoney()}"></span>. You dined at to <strong th:text="${gamestats.getLastMove().getRestaurantName()}"></strong>, which cost you <span th:text="${gamestats.getLastMove().getUsedHealth()}"></span> points of health.
+        <strong>Your Action: </strong>You traveled <span th:text="${#numbers.formatDecimal(gamestats.getLastMove().getDistanceInMiles(),1,1)}"></span> miles in Uber, which cost you $<span th:text="${#numbers.formatDecimal(gamestats.getLastMove().getUsedMoney(),1,2)}"></span>. You dined at to <strong th:text="${gamestats.getLastMove().getRestaurantName()}"></strong>, which cost you <span th:text="${gamestats.getLastMove().getUsedHealth()}"></span> points of health.
     </div>
+        <div th:unless="${gamestats.isLastMove()}" class="alert alert-info fade in col-sm-12">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Your Goal: </strong>You work as a food critic in New York: you eat for free, but you have a travel budget. Being a busy person, you use Uber to travel from one restaurant to another. Eating a lot every day is unhealthy, particularly if you eat in a place that hasn't performed well in health inspections, so watch out also for your health! You have five randomized missions, which you can complete in any order, but since transportation is costly, plan wisely.
+        </div>
     </div>
-    <div id="main" class="row">
-        <div class="col-sm-6">
+    <div class="row" th:if="${gamestats.isGameOver()}">
+        <div th:if="${gamestats.isLastMove()}" class="alert alert-danger fade in col-sm-12">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Game Over: </strong>You have run out of money and can't pay for the trip! The Uber driver calls the police, who takes you away!
+        </div>
+        <div th:if="${gamestats.isLastMove()}" class="alert alert-danger fade in col-sm-12">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Game Over: </strong>You keel over, feeling sick in the stomach! You have run out of health points!
+        </div>
+        <div th:if="${gamestats.isLastMove()}" class="alert alert-info fade in col-sm-12">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>You Win: </strong>Congratulations! You have successfully completed all your missions!
+        </div>
+        <div id="main" class="row">
+            <div class="col-sm-6">
             <h3>In Hand</h3>
             <div id="hand" class="field" style="background-color: #DDD">
                 <div class="card slidable" th:each="card,iter: ${gamestats.hand}" th:id="${card._id}">

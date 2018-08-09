@@ -46,6 +46,7 @@ public class GameController {
         }
 
         if (this.stats.getPlayedMissions().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
+            this.stats.setEnd(false);
             ResponseEntity<List<Mission>> response = restTemplate.exchange(
                     "http://localhost:8080/missions/",
                     HttpMethod.GET, null,
@@ -79,5 +80,11 @@ public class GameController {
             this.stats.gameOver();
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/reset")
+    public String reset(Model model) {
+        this.stats = new GameStats();
+        return game(model);
     }
 }
