@@ -27,7 +27,7 @@ public class GameController {
 
     @GetMapping("/")
     public String game(Model model) {
-        if (this.stats.getPlayedMissions().size()>0) {
+        if (this.stats.getPlayedMissions().size()>0) {//jos löytyy pelattu kortti (peli on jo aloitettu)
             Mission last = stats.getPlayedMissions().get(stats.getPlayedMissions().size()-1);
             if (last.getName()=="") last.setName("all");
             System.out.println(last);
@@ -36,7 +36,7 @@ public class GameController {
                     HttpMethod.GET, null,
                     new ParameterizedTypeReference<List<Restaurant>>() {
                     });
-            model.addAttribute("restaurants", restaurantResponse.getBody());
+            this.stats.setRestaurantList(restaurantResponse.getBody());
         }
 
         if (this.stats.getHand().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
@@ -65,9 +65,9 @@ public class GameController {
         return "Game";
     }
 
-    @GetMapping("/play")
-    public String play(@RequestBody int index, Restaurant restaurant, double distance, int time, Model model) {
-        this.stats = this.stats.makeMove(index, restaurant, distance, time); //päivitetään statsit
+    @GetMapping("/play/{index}/{distance}")
+    public String play(@PathVariable int index, double distance, Model model) {
+        this.stats = this.stats.makeMove(index, distance); //päivitetään statsit
         model.addAttribute("gamestats", this.stats);
         if (this.stats.getHand().isEmpty()||this.stats.getHealth()<=0||this.stats.getMoney()<=0) { //jos peli loppuu joko terveyden, rahojen tai korttien loppumisen vuoksi
             this.stats.gameOver();

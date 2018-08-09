@@ -209,10 +209,10 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
-                <tr class="slidable" th:each="restaurant,iter: ${restaurants}" th:id="${restaurant._id}" th:onclick="|mappi('${restaurant.address.coord[1]}','${restaurant.address.coord[0]}')|">
+                <tr class="slidable" th:each="restaurant: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLongitude()}','${restaurant.getLatitude()}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
-
+                    <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.address.coord[1]}','${restaurant.address.coord[0]}','${iter.index}')|">Go!</button></td>
                 </tr>
                 </tbody>
                 <script>
@@ -240,7 +240,13 @@
 <script>
     window.onload = mappi('40.7676919', '-73.98513559999999');
 </script>
+<<<<<<< HEAD
 <!--<script type="text/javascript" th:src="@{/js/choose.js}">
 </script>-->
+=======
+<!--<script>-->
+<!--<script type="text/javascript" th:src="@{/js/choose.js}">-->
+<!--</script>-->
+>>>>>>> f175404f4f3a9644f6a4de34f99b8ff26a95b979
 </body>
 </html>

@@ -15,6 +15,9 @@ public class GameStats {//pelitilanneolio
     private List<Mission> playedMissions;
     private boolean missionMode;
     private List<LastMove> moves;
+    private List<Restaurant> restaurantList;
+    private String longitude;
+    private String latitude;
 
     //asetetaan alkuarvot
     public GameStats() {
@@ -25,6 +28,9 @@ public class GameStats {//pelitilanneolio
         this.playedMissions = new ArrayList<>();
         this.missionMode = false;
         this.moves = new ArrayList<>();
+        this.restaurantList = restaurantList;
+        this.latitude = "40.7676919";
+        this.longitude = "-73.98513559999999";
     }
 
     public GameStats(int health, int money, String foodcriticName, List<Mission> hand, List<Mission> playedMissions) {
@@ -51,14 +57,21 @@ public class GameStats {//pelitilanneolio
     }
 
     //vuoron päätteeksi tehdään tämä setti tietojen päivittämiseksi ja vuoron lisäämiseksi
-    public GameStats makeMove(int index, Restaurant restaurant, double distance, int time) {
+    public GameStats makeMove(int restaurantIndex, double distance) {
+        Restaurant restaurant = this.restaurantList.get(restaurantIndex);
         int restaurantScore = restaurant.getGrades().get(0).getScore(); // tallettaa ravintolan scoren
-        LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), time, distance, false); //tekee pelatun vuoron tiedoista LastMove-olion
+        LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), distance, false); //tekee pelatun vuoron tiedoista LastMove-olion
         useHealth(restaurantScore);// vähentää terveyttä ravintolan scoren verran
         useMoney(move.getUsedMoney()); //käyttää rahaa matkan taksan verran
+        setNewCoordinates(restaurant);
         this.moves.add(move); // lisää pelatun vuoron vuorojen listalle
         setMissionMode(false); // asettaa missionModen kortinvalinta-tilaan
         return this;//palauttaa GameStats-olion (tarvitaanko tätä edes?)
+    }
+
+    private void setNewCoordinates(Restaurant restaurant) {
+        this.longitude = restaurant.getLongitude();
+        this.latitude = restaurant.getLatitude();
     }
 
     public List<LastMove> getMoves() {
@@ -95,6 +108,14 @@ public class GameStats {//pelitilanneolio
             this.playedMissions.add(playedCard);
             this.setMissionMode(true);
         }
+    }
+
+    public List<Restaurant> getRestaurantList() {
+        return restaurantList;
+    }
+
+    public void setRestaurantList(List<Restaurant> restaurantList) {
+        this.restaurantList = restaurantList;
     }
 
     public boolean isMissionMode() {
@@ -145,7 +166,23 @@ public class GameStats {//pelitilanneolio
         this.playedMissions = playedMissions;
     }
 
-    public void putOnTop (int index) {
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public void putOnTop(int index) {
         Mission tmp = this.hand.get(index);
         this.hand.remove(index);
         this.hand.add(tmp);

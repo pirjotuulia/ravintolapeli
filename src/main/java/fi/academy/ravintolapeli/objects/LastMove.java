@@ -11,7 +11,7 @@ public class LastMove {
     public LastMove() {
     }
 
-    public LastMove(int usedHealth, String longitude, String latitude, int time, double distanceInMiles, boolean extraFare) {
+    public LastMove(int usedHealth, String longitude, String latitude, double distanceInMiles, boolean extraFare) {
         this.usedHealth = usedHealth;
         this.longitude = longitude;
         this.latitude = latitude;
