@@ -205,7 +205,7 @@
             <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
         </div>
         <div class="col-sm-4">
-            <button class="btn-primary" onclick="resetGame()">Reset Game</button>
+            <button class="btn-primary" onclick="resetGame()">Start New Game</button>
         </div>
     </div>
     <div class="row">
@@ -226,6 +226,10 @@
         <div th:if="${gamestats.isLastMove()}" class="alert alert-danger fade in col-sm-12">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Game Over: </strong>You keel over, feeling sick in the stomach! You have run out of health points!
+        </div>
+        <div th:if="${gamestats.isLastMove()}" class="alert alert-info fade in col-sm-12">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>You Win: </strong>Congratulations! You have successfully completed all your missions!
         </div>
         <div id="main" class="row">
         <div class="col-sm-6">
