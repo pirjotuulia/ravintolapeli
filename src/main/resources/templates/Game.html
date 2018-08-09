@@ -96,23 +96,21 @@
             top:14.0em;
             left:1em;
         }
+        .noselect {
+            cursor:pointer;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+        }
     </style>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
-    <script>
-        $(document).on("pagecreate", "#main", function () {
-            $("div").on("swiperight", function () {
-                $(this).fadeOut(300, function () {
-                        //$.ajax("/killdodo/kill/"+this.id, {type: 'DELETE'});
-                        //$(this).remove();
-                    }
-                );
-            });
-        });
-    </script>
 </head>
 <script>
     function mappi(long, lat) {
@@ -178,20 +176,9 @@
             <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>[[${#numbers.formatDecimal(gamestats.getMoney(),
                 1, 2)} + '/100.00']]</p>
         </div>
-        <!--<div th:if="${gamestats.isLastMove()}" class="col-sm-4">-->
-            <!--<p  th:inline="text"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> [[${gamestats.getLastMove().getRestaurantName()]] </p>-->
-        <!--</div>-->
         <div th:unless="${gamestats.isLastMove()}" class="col-sm-4">
             <p th:inline="text"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
         </div>
-        <!--<div th:if="${gamestats.isLastMove()}" class="lastmove">-->
-            <!--<p>Distance in miles: </p>-->
-            <!--<p th:text="${gamestats.getLastMove().getDistanceInMiles()}"></p>-->
-            <!--<p>Travel costs: </p>-->
-            <!--<p th:text="${gamestats.getLastMove().getUsedMoney()}"></p>-->
-            <!--<p>Health effect: </p>-->
-            <!--<p th:text="${gamestats.getLastMove().getUsedHealth()}"></p>-->
-        <!--</div>-->
     </div>
     <div id="main" class="row">
         <div class="col-sm-6">
@@ -229,7 +216,7 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
-                <tr class="slidable" th:if="${gamestats.isMissionMode()}==true" th:each="restaurant, iter: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
+                <tr class="slidable noselect" th:if="${gamestats.isMissionMode()}==true" th:each="restaurant, iter: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
                     <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.getLongitude()}','${restaurant.getLatitude()}','${iter.index}')|">Go!</button></td>
