@@ -148,7 +148,16 @@
         document.location.reload(true);
     }
 </script>
-
+<script>
+    function selectRestaurant (fLong, fLat, tLong, tLat, index) {
+        // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
+        //var distance = getDistance(fLong, fLat, tLong, tLat);
+        var distance = 5;
+        // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
+        $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
+        //document.location.reload(true);
+    }
+</script>
 <body>
 <div class="page-header text-center">
     <h1>Restaurant Critic</h1>
@@ -209,21 +218,12 @@
                 <th>Address</th>
                 </thead>
                 <tbody>
-                <tr class="slidable" th:each="restaurant: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLongitude()}','${restaurant.getLatitude()}')|">
+                <tr class="slidable" th:each="restaurant,iter: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
                     <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.address.coord[1]}','${restaurant.address.coord[0]}','${iter.index}')|">Go!</button></td>
                 </tr>
                 </tbody>
-                <script>
-                    function selectRestaurant (fLong, fLat, tLong, tLat, index) {
-                        // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
-                        var distance = getDistance(fLong, fLat, tLong, tLat);
-                        // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
-                        $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
-                        document.location.reload(true);
-                    }
-                </script>
             </table>
         </div>
         <div id="mapHere" class="col-sm-6">
@@ -240,13 +240,6 @@
 <script>
     window.onload = mappi('40.7676919', '-73.98513559999999');
 </script>
-<<<<<<< HEAD
-<!--<script type="text/javascript" th:src="@{/js/choose.js}">
-</script>-->
-=======
-<!--<script>-->
-<!--<script type="text/javascript" th:src="@{/js/choose.js}">-->
-<!--</script>-->
->>>>>>> f175404f4f3a9644f6a4de34f99b8ff26a95b979
+<script type="text/javascript" th:src="@{/js/distance.js}"></script>
 </body>
 </html>
