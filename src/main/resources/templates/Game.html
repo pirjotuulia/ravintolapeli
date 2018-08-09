@@ -14,6 +14,7 @@
             padding: 10px;
             border: 1px solid #aaaaaa;
         }
+
         .card {
             width: 18em;
             height: 26em;
@@ -21,19 +22,21 @@
             -moz-border-radius: 10px;
             border-radius: 10px;
             background-color: black;
-            margin:auto;
-            position:absolute;
+            margin: auto;
+            position: absolute;
             cursor: move;
-            -webkit-box-shadow: 5px 5px 9px 0px rgba(0,0,0,0.75);
-            -moz-box-shadow: 5px 5px 9px 0px rgba(0,0,0,0.75);
-            box-shadow: 5px 5px 9px 0px rgba(0,0,0,0.75);
+            -webkit-box-shadow: 5px 5px 9px 0px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 5px 5px 9px 0px rgba(0, 0, 0, 0.75);
+            box-shadow: 5px 5px 9px 0px rgba(0, 0, 0, 0.75);
         }
+
         .inner {
             background-color: cornflowerblue;
             margin: 0.5em;
             padding: 0.3em;
             height: 25em;
         }
+
         .title {
             font-weight: bold;
             -webkit-border-top-left-radius: 5px;
@@ -43,22 +46,26 @@
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
         }
+
         .title, .illo, .story {
             background-color: skyblue;
             margin: 0.3em;
             padding: 0.2em 0.5em;
         }
+
         .illo {
             min-height: 9em;
             text-align: center;
             max-height: 9em;
         }
+
         .pic {
             min-height: 8em;
             text-align: center;
             max-height: 8em;
             max-width: 100%;
         }
+
         .story {
             min-height: 11em;
             max-height: 11em;
@@ -108,7 +115,7 @@
     </script>
 </head>
 <script>
-    function mappi(long,lat) {
+    function mappi(long, lat) {
         console.log("Mappi mainittu!");
         $("#osm-map").remove();
         $("#mapHere").append("<div id='osm-map' style='height:300px'></div>");
@@ -120,9 +127,9 @@
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        console.log(long+" "+lat);
-        var x = ""+long;
-        var y = ""+lat;
+        console.log(long + " " + lat);
+        var x = "" + long;
+        var y = "" + lat;
         var target = L.latLng(x, y);
         map.setView(target, 10);
 
@@ -156,10 +163,12 @@
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <p th:inline="text"><span style="color:red" class="glyphicon glyphicon-heart">   </span>[[${gamestats.getHealth()} + '/100']]</p>
+            <p th:inline="text"><span style="color:red" class="glyphicon glyphicon-heart">   </span>[[${gamestats.getHealth()}
+                + '/100']]</p>
         </div>
         <div class="col-sm-4">
-            <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>[[${#numbers.formatDecimal(gamestats.getMoney(), 1, 2)} + '/100.00']]</p>
+            <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>[[${#numbers.formatDecimal(gamestats.getMoney(),
+                1, 2)} + '/100.00']]</p>
         </div>
         <div class="col-sm-4">
             <p><span style="color:blue" class="glyphicon glyphicon-map-marker"></span> Times Square</p>
@@ -213,12 +222,17 @@
             <h3>Map View</h3>
         </div>
     </div>
+    <div class="play">
+
+    </div>
 </div>
 </div>
 <footer>Content</footer>
 
 <script>
     window.onload = mappi('40.7676919', '-73.98513559999999');
+</script>
+<script type="text/javascript" th:src="@{/js/choose.js}">
 </script>
 </body>
 </html>
