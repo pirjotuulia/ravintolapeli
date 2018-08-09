@@ -7,16 +7,18 @@ public class LastMove {
     private String latitude;
     private int time;
     private double distanceInMiles;
+    private String restaurantName;
 
     public LastMove() {
     }
 
-    public LastMove(int usedHealth, String longitude, String latitude, double distanceInMiles, boolean extraFare) {
+    public LastMove(int usedHealth, String longitude, String latitude, double distanceInMiles, boolean extraFare, String restaurantName) {
         this.usedHealth = usedHealth;
         this.longitude = longitude;
         this.latitude = latitude;
         this.time = time;
         this.distanceInMiles = distanceInMiles;
+        this.restaurantName = restaurantName;
         travelCosts(extraFare);
     }
 
@@ -85,5 +87,14 @@ public class LastMove {
 
     public void setDistanceInMiles(double distanceInMiles) {
         this.distanceInMiles = distanceInMiles;
+    }
+
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 }

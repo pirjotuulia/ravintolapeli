@@ -60,7 +60,7 @@ public class GameStats {//pelitilanneolio
     public GameStats makeMove(int restaurantIndex, double distance) {
         Restaurant restaurant = this.restaurantList.get(restaurantIndex);
         int restaurantScore = restaurant.getGrades().get(0).getScore(); // tallettaa ravintolan scoren
-        LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), distance, false); //tekee pelatun vuoron tiedoista LastMove-olion
+        LastMove move = new LastMove(restaurantScore, restaurant.getLongitude(), restaurant.getLatitude(), distance, false, restaurant.getName()); //tekee pelatun vuoron tiedoista LastMove-olion
         useHealth(restaurantScore);// vähentää terveyttä ravintolan scoren verran
         useMoney(move.getUsedMoney()); //käyttää rahaa matkan taksan verran
         setNewCoordinates(restaurant);
@@ -72,6 +72,20 @@ public class GameStats {//pelitilanneolio
     private void setNewCoordinates(Restaurant restaurant) {
         this.longitude = restaurant.getLongitude();
         this.latitude = restaurant.getLatitude();
+    }
+
+    public LastMove getLastMove() {
+        if (isLastMove()) {
+            return this.moves.get(this.moves.size() - 1);
+        }
+        return null;
+    }
+
+    public boolean isLastMove() {
+        if (this.moves.size() > 0) {
+            return true;
+        }
+        return false;
     }
 
     public List<LastMove> getMoves() {
