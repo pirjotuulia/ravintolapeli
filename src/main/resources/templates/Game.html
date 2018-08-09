@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" rel="stylesheet"/>
-    <!--<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">-->
     <style>
         .field {
             width: 350px;
@@ -35,6 +34,11 @@
             margin: 0.5em;
             padding: 0.3em;
             height: 25em;
+            background: rgb(30,87,153); /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,1) 50%, rgba(32,124,202,1) 51%, rgba(125,185,232,1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
         }
 
         .title {
@@ -110,7 +114,6 @@
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <script th:inline="javascript">
     function mappi(long, lat) {
@@ -175,19 +178,19 @@
         document.location.reload(true);
     }
 </script>
-<script>
+<script th:inline="javascript">
     function selectRestaurant (fLong, fLat, tLong, tLat, index) {
         // Kutsuu funktiota, joka katsoo tie-datasta nykyisen ja valitun ravintolan etäisyyden
         var distance = getDistance(fLat, fLong, tLat, tLong);
         // var distance = 5;
         // Tekee pyynnön play-osoitteeseen, joka pelaa kierroksen loppuun
         $.ajax("http://localhost:8080/play/" + index + "/" + distance, {type: 'GET'});
-        document.location.reload(true);
+        document.location.reload(false);
     }
 </script>
 <body>
 <div class="page-header text-center">
-    <h1>Restaurant Critic</h1>
+    <h1>Food Critic</h1>
 </div>
 
 <div class="container">
@@ -198,11 +201,11 @@
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <p th:inline="text"><span style="color:red" class="glyphicon glyphicon-heart">   </span>[[${gamestats.getHealth()}
+            <p th:inline="text"><span style="color:red" class="glyphicon glyphicon-heart">   </span> [[${gamestats.getHealth()}
                 + '/100']]</p>
         </div>
         <div class="col-sm-4">
-            <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span>[[${#numbers.formatDecimal(gamestats.getMoney(),
+            <p th:inline="text"><span style="color:green" class="glyphicon glyphicon-usd">   </span> [[${#numbers.formatDecimal(gamestats.getMoney(),
                 1, 2)} + '/200.00']]</p>
         </div>
         <div th:if="${gamestats.isLastMove()}" class="col-sm-4">
@@ -212,13 +215,13 @@
             <p th:inline="text" th:onclick="|mappi('${gamestats.getLatitude()}','${gamestats.getLongitude()}')|"><span style="color:blue" class="glyphicon glyphicon-map-marker">   </span> Times Square  </p>
         </div>
         <div th:if="${gamestats.isLastMove()}" class="lastmove">
-            <p>Distance in miles: </p>
-            <p th:text="${gamestats.getLastMove().getDistanceInMiles()}"></p>
-            <p>Travel costs: </p>
-            <p th:text="${gamestats.getLastMove().getUsedMoney()}"></p>
-            <p>Health effect: </p>
-            <p th:text="${gamestats.getLastMove().getUsedHealth()}"></p>
         </div>
+    </div>
+    <div class="row">
+    <div th:if="${gamestats.isLastMove()}" class="alert alert-success fade in col-sm-12">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Your Action: </strong>You traveled <span th:text="${gamestats.getLastMove().getDistanceInMiles()}"></span> miles in Uber, which cost you $<span th:text="${gamestats.getLastMove().getUsedMoney()}"></span>. You dined at to <strong th:text="${gamestats.getLastMove().getRestaurantName()}"></strong>, which cost you <span th:text="${gamestats.getLastMove().getUsedHealth()}"></span> points of health.
+    </div>
     </div>
     <div id="main" class="row">
         <div class="col-sm-6">
@@ -259,7 +262,7 @@
                 <tr class="slidable noselect" th:if="${gamestats.isMissionMode()}==true" th:each="restaurant, iter: ${gamestats.getRestaurantList()}" th:onclick="|mappi('${restaurant.getLatitude()}','${restaurant.getLongitude()}')|">
                     <td th:text="${restaurant.name}"></td>
                     <td th:text="${restaurant.address.street}"></td>
-                    <td><button th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.getLongitude()}','${restaurant.getLatitude()}','${iter.index}')|">Go!</button></td>
+                    <td><button class="btn-primary" th:onclick="|selectRestaurant('${gamestats.getLongitude()}','${gamestats.getLatitude()}','${restaurant.getLongitude()}','${restaurant.getLatitude()}','${iter.index}')|">Go!</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -275,7 +278,10 @@
 <script th:inline="javascript">
     var lat = [[${gamestats.getLatitude()}]];
     var long = [[${gamestats.getLongitude()}]];
-    window.onload = mappi(lat, long);
+    window.onload = mappi(lat, long), reset;
+    function reset () {
+        window.scrollTo(0, 0);
+    }
 </script>
 <script type="text/javascript" th:src="@{/js/distance.js}"></script>
 </body>
