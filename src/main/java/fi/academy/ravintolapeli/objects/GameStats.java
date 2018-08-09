@@ -21,6 +21,7 @@ public class GameStats {//pelitilanneolio
     private String longitude;
     private String latitude;
     private GameOver gameover;
+    private boolean end;
 
     //asetetaan alkuarvot
     public GameStats() {
@@ -37,6 +38,7 @@ public class GameStats {//pelitilanneolio
         this.latitude = "40.7676919";
         this.longitude = "-73.98513559999999";
         this.gameover = new GameOver();
+        this.end = false;
     }
 
     public GameStats(int health, int money, String foodcriticName, List<Mission> hand, List<Mission> playedMissions) {
@@ -96,15 +98,8 @@ public class GameStats {//pelitilanneolio
         return false;
     }
 
-    public List<LastMove> getMoves() {
-        return moves;
-    }
-
-    public void setMoves(List<LastMove> moves) {
-        this.moves = moves;
-    }
-
     public void gameOver() {//kun peli on pelattu loppuun
+        this.end = true;
         setFinalStats();
         this.setHand(new ArrayList<>()); //tyhjennetään käsi, riippumatta siitä, oliko se jo tyhjä vai loppuiko peli muusta syystä
         this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
@@ -127,6 +122,10 @@ public class GameStats {//pelitilanneolio
     public double useMoney(double used) {
         this.money -= used;
         return this.money;
+    }
+
+    public boolean isGameOver() {
+        return end;
     }
 
     public void playCard(int index) {// siirtää pelatun kortin kädestä pelattuihin, jos missionMode=false
@@ -208,6 +207,22 @@ public class GameStats {//pelitilanneolio
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public List<LastMove> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(List<LastMove> moves) {
+        this.moves = moves;
+    }
+
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
     }
 
     public GameOver getGameover() {
