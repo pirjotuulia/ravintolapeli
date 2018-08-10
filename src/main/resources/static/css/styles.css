@@ -1,99 +1,110 @@
-body {
-    color: #444;
-    font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
-    text-shadow: 0 1px 0 #fff;
+.field {
+    width: 350px;
+    height: 40em;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
 }
 
-strong {
-    font-weight: bold;
-}
-
-em {
-    font-style: italic;
-}
-
-table {
-    background: #f5f5f5;
-    border-collapse: separate;
-    box-shadow: inset 0 1px 0 #fff;
-    font-size: 12px;
-    line-height: 24px;
-    margin: 30px auto;
-    text-align: left;
-    width: 800px;
-}
-
-th {
-    background: url(https://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#777, #444);
-    border-left: 1px solid #555;
-    border-right: 1px solid #777;
-    border-top: 1px solid #555;
-    border-bottom: 1px solid #333;
-    box-shadow: inset 0 1px 0 #999;
-    color: #222;
-    font-weight: bold;
-    padding: 10px 15px;
-    position: relative;
-    text-shadow: 0 1px 0 #000;
-}
-
-th:after {
-    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .08));
-    content: '';
-    display: block;
-    height: 25%;
-    left: 0;
-    margin: 1px 0 0 0;
+.card {
+    width: 18em;
+    height: 26em;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: black;
+    margin: auto;
     position: absolute;
-    top: 25%;
-    width: 100%;
+    cursor: move;
+    -webkit-box-shadow: 5px 5px 9px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 5px 5px 9px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 5px 5px 9px 0px rgba(0, 0, 0, 0.75);
 }
 
-th:first-child {
-    border-left: 1px solid #777;
-    box-shadow: inset 1px 1px 0 #999;
+.inner {
+    background-color: cornflowerblue;
+    margin: 0.5em;
+    padding: 0.3em;
+    height: 25em;
+    background: rgb(30, 87, 153); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(30, 87, 153, 1) 0%, rgba(41, 137, 216, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(30, 87, 153, 1) 0%, rgba(41, 137, 216, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(30, 87, 153, 1) 0%, rgba(41, 137, 216, 1) 50%, rgba(32, 124, 202, 1) 51%, rgba(125, 185, 232, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e5799', endColorstr='#7db9e8', GradientType=0); /* IE6-9 */
 }
 
-th:last-child {
-    box-shadow: inset -1px 1px 0 #999;
+.title {
+    font-weight: bold;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
-td {
-    border-right: 1px solid #fff;
-    border-left: 1px solid #e8e8e8;
-    border-top: 1px solid #fff;
-    border-bottom: 1px solid #e8e8e8;
-    padding: 4px;
-    padding-left: 10px;
-    /*position: relative;*/
-    transition: all 300ms;
+.title, .illo, .story {
+    background-color: skyblue;
+    margin: 0.3em;
+    padding: 0.2em 0.5em;
 }
 
-td:first-child {
-    box-shadow: inset 1px 0 0 #fff;
+.illo {
+    min-height: 9em;
+    text-align: center;
+    max-height: 9em;
 }
 
-td:last-child {
-    border-right: 1px solid #e8e8e8;
-    box-shadow: inset -1px 0 0 #fff;
+.pic {
+    min-height: 8em;
+    text-align: center;
+    max-height: 8em;
+    max-width: 100%;
 }
 
-tr:last-of-type td {
-    box-shadow: inset 0 -1px 0 #fff;
+.story {
+    min-height: 11em;
+    max-height: 11em;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
-tr:last-of-type td:first-child {
-    box-shadow: inset 1px -1px 0 #fff;
+.card:nth-of-type(1) {
+    top: 6.0em;
+    left: 6.5em;
 }
 
-tr:last-of-type td:last-child {
-    box-shadow: inset -1px -1px 0 #fff;
+.card:nth-of-type(2) {
+    top: 8.5em;
+    left: 5.5em;
 }
-.App-logo {
-    animation: App-logo-spin infinite 15s linear;
-    height: 50px;
+
+.card:nth-of-type(3) {
+    top: 11.0em;
+    left: 4.5em;
 }
-@keyframes App-logo-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+
+.card:nth-of-type(4) {
+    top: 13.5em;
+    left: 3.5em;
+}
+
+.card:nth-of-type(5) {
+    top: 16.0em;
+    left: 2.5em;
+}
+
+.noselect {
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                     supported by Chrome and Opera */
 }
