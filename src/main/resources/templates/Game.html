@@ -15,7 +15,6 @@
     function allowDrop(ev) {
         ev.preventDefault();
     }
-
     function drop(ev) {
         ev.preventDefault();
         var topmost = [[${gamestats.hand.size()-1}]];
@@ -71,14 +70,14 @@
     }
 </script>
 <script>
-    function cycleDeck(index) {
-        $.ajax("http://localhost:8080/top/" + index, {type: 'GET'});
+    function resetGame() {
+        $.ajax("http://localhost:8080/reset", {type: 'GET'});
         document.location.reload(true);
     }
 </script>
 <script>
-    function resetGame() {
-        $.ajax("http://localhost:8080/reset", {type: 'GET'});
+    function cycleDeck(index) {
+        $.ajax("http://localhost:8080/top/" + index, {type: 'GET'});
         document.location.reload(true);
     }
 </script>
@@ -222,11 +221,8 @@
 <script th:inline="javascript">
     var lat = [[${gamestats.getLatitude()}]];
     var long = [[${gamestats.getLongitude()}]];
-    window.onload = mappi(lat, long), reset;
+    window.onload = mappi(lat, long);
 
-    function reset() {
-        window.scrollTo(0, 0);
-    }
 </script>
 <script type="text/javascript" th:src="@{/js/distance.js}"></script>
 </body>

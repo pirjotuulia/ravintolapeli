@@ -22,10 +22,12 @@ import java.util.stream.Collectors;
 public class GameController {
     private GameStats stats;
     private RestTemplate restTemplate;
+    private boolean getMissions;
 
     public GameController(@Autowired GameStats stats) {
         this.stats = stats;
         this.restTemplate = new RestTemplate();
+        this.getMissions = true;
     }
 
     @GetMapping("/")
@@ -45,7 +47,7 @@ public class GameController {
             this.stats.setRestaurantList(restaurantList);
         }
 
-        if (this.stats.getPlayedMissions().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
+        if (getMissions) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
             this.stats.setEnd(false);
             ResponseEntity<List<Mission>> response = restTemplate.exchange(
                     "http://localhost:8080/missions/",
@@ -53,6 +55,7 @@ public class GameController {
                     new ParameterizedTypeReference<List<Mission>>() {
                     });
             this.stats.setHand(response.getBody());
+            getMissions = false;
         }
         model.addAttribute("gamestats", this.stats);
         return "Game";
@@ -85,6 +88,7 @@ public class GameController {
     @GetMapping("/reset")
     public String reset(Model model) {
         this.stats = new GameStats();
+        getMissions = true;
         return game(model);
     }
 }
