@@ -229,9 +229,9 @@
         <div th:if="${gamestats.isLastMove()}" class="alert alert-success fade in col-sm-12">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Your Action: </strong>You traveled <span
-                th:text="${#numbers.formatDecimal(gamestats.getLastMove().getDistanceInMiles(),1,1)}"></span> miles in
+                th:text="${#numbers.formatDecimal(gamestats.getLastMove().getDistanceInMiles(),1,1)}"></span> miles with
             Uber, which cost you $<span
-                th:text="${#numbers.formatDecimal(gamestats.getLastMove().getUsedMoney(),1,2)}"></span>. You dined at to
+                th:text="${#numbers.formatDecimal(gamestats.getLastMove().getUsedMoney(),1,2)}"></span>. You dined at
             <strong th:text="${gamestats.getLastMove().getRestaurantName()}"></strong>, which cost you <span
                 th:text="${gamestats.getLastMove().getUsedHealth()}"></span> points of health.
         </div>
