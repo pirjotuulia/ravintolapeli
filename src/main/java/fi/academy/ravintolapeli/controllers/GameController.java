@@ -30,11 +30,11 @@ public class GameController {
 
     @GetMapping("/")
     public String game(Model model) {
-        if (this.stats.getPlayedMissions().size()>0) {//jos löytyy pelattu kortti (peli on jo aloitettu)
-            Mission last = stats.getPlayedMissions().get(stats.getPlayedMissions().size()-1);
-            if (last.getName()=="") last.setName("all");
+        if (this.stats.getPlayedMissions().size() > 0) {//jos löytyy pelattu kortti (peli on jo aloitettu)
+            Mission last = stats.getPlayedMissions().get(stats.getPlayedMissions().size() - 1);
+            if (last.getName() == "") last.setName("all");
             ResponseEntity<List<Restaurant>> restaurantResponse = restTemplate.exchange(
-                    "http://localhost:8080/list/"+last.getBorough()+"/"+last.getCuisine()+"/"+last.getName(),
+                    "http://localhost:8080/list/" + last.getBorough() + "/" + last.getCuisine() + "/" + last.getName(),
                     HttpMethod.GET, null,
                     new ParameterizedTypeReference<List<Restaurant>>() {
                     });
@@ -45,7 +45,7 @@ public class GameController {
             this.stats.setRestaurantList(restaurantList);
         }
 
-        if (this.stats.getPlayedMissions().size()==0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
+        if (this.stats.getPlayedMissions().size() == 0) {//jos kyseessä on ensimmäinen vuoro, haetaan uudet missionit
             this.stats.setEnd(false);
             ResponseEntity<List<Mission>> response = restTemplate.exchange(
                     "http://localhost:8080/missions/",
@@ -67,7 +67,9 @@ public class GameController {
 
     @GetMapping("/card/{index}")
     public String card(@PathVariable int index, Model model) {
-        this.stats.playCard(index);
+        if (!this.stats.isEnd()) {
+            this.stats.playCard(index);
+        }
         model.addAttribute("gamestats", this.stats);
         return "Game";
     }
@@ -76,7 +78,7 @@ public class GameController {
     public String play(@PathVariable int index, @PathVariable double distance, Model model) {
         this.stats = this.stats.makeMove(index, distance); //päivitetään statsit
         model.addAttribute("gamestats", this.stats);
-        if (this.stats.getHand().isEmpty()||this.stats.getHealth()<=0||this.stats.getMoney()<=0) { //jos peli loppuu joko terveyden, rahojen tai korttien loppumisen vuoksi
+        if (this.stats.getHand().isEmpty() || this.stats.getHealth() <= 0 || this.stats.getMoney() <= 0) { //jos peli loppuu joko terveyden, rahojen tai korttien loppumisen vuoksi
             this.stats.gameOver();
         }
         return "redirect:/";
