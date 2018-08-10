@@ -100,6 +100,9 @@ public class GameStats {//pelitilanneolio
 
     public void gameOver() {//kun peli on pelattu loppuun
         this.end = true;
+        if (this.hand.size()==0&&this.money>=0&&this.health>0) {
+            this.gameover.win();
+        }
         setFinalStats();
 //        this.setHand(new ArrayList<>()); //tyhjennetään käsi, riippumatta siitä, oliko se jo tyhjä vai loppuiko peli muusta syystä
 //        this.setPlayedMissions(new ArrayList<>()); //tyhjennetään pelatut kortit
